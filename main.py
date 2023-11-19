@@ -1,89 +1,43 @@
-"""
-POST /feed
-GET  /feed/{feed-id}/content  # get the feed!
-PUT  /feed/{feed-id}/content/{content-id}  # update (e.g. publish/make non-public)
-POST /feed/{feed-id}/content  # add content to the feed (inc. summarize, score)
-GET  /feed/{feed-id}/tags     # get tags for the feed
-GET  /feed/{feed-id}/tags/{tag-id}  # get tag info
-POST /feed/{feed-id}/tags     # list tags
-"""
+import json
+import gzip
+import os
 
-raw_content = [
-    {
-        "url": "https://ghost.org/docs/content-api",
-        "title": "",
-        "body": "",
-        "featured": False,
-        "visibility": "public",
-        "read_time": 1,
-        "og_image": None,
-        "og_title": None,
-        "og_description": None,
-        "tags": [
-            {
-                "id": "f1a4fd1bbcee40f980414b479e22850a"
-            }
-        ]
-    }
-]
+import sqlalchemy.exc
+
+from src.common import backends
+from src.common.normalize import normalize_legacy_record
+from src.commands.content import insert_content
+from src.commands.user import get_user
+
+ADMIN_ID = "23717269e6144d8e995c7541a39b648c"
+EMBED_MODEL = os.environ["FLARE_EMBED_MODEL"]
+BACKEND = "default"
 
 
-content = [
-    {
-        "id": "2e2eae5546194c308fbd75b216473103",
-        "url": "https://ghost.org/docs/content-api",
-        "title": "",
-        "body": "",
-        "summary": "",
-        "featured": False,
-        "visibility": "public",
-        "created_at": "2023-11-04T15:43:07",
-        "updated_at": "2023-11-04T15:43:07",
-        "published_at": "2023-11-04T15:43:07",
-        "read_time": 1,
-        "score": 7,
-        "og_image": None,
-        "og_title": None,
-        "og_description": None,
-        "tags": [
-            {
-                "id": "f1a4fd1bbcee40f980414b479e22850a",
-                "name": "GitHub",
-                "visibility": "public"
-            }
-        ]
-    }
-]
+user_repo, content_repo, _ = backends.initialize(BACKEND)
 
+buffer = gzip.open("data/development/exports_resource-snapshot.jsonl.gz", mode="rb")
 
-tags = [
-    {
-        "id": "f1a4fd1bbcee40f980414b479e22850a",
-        "name": "GitHub",
-        "visibility": "public",
-        "tagger": "taggers.GitHub"
-    }
-]
+with buffer as file:
+    data = file.read().decode("utf-8")
+    rows = data.split("\n")
+    rows = [json.loads(_.strip()) for _ in rows if len(_) > 0][586:]
 
+user = get_user(user_repo, ADMIN_ID)
 
-feeds = [
-    {
-        "id": "machine-learning",
-        "scorer": {
-            "callable": "scorers.MachineLearning",
-            "parameters": {}
-        },  # scores content at load-time for relevance
-        "ranker": {
-            "callable": "rankers.MachineLearning",
-            "parameters": {}
-        },  # maintains feed
-        "summarizer": {
-            "callable": "summarizers.OpenAI"
-        },
-        "workers": [
-
-        ],  # background workers that can check for updates to source content,
-            # publish content etc.
-        "created_at": "2023-11-04T15:43:07"
-    }
-]
+count = 0
+for i, row in enumerate(rows):
+    if row["provider"] == "github":
+        count += 1
+    # normalized_record = normalize_legacy_record(row)
+    # if normalized_record is not None and normalized_record.metadata[
+    #     "locale"
+    # ].startswith("en"):
+    #     print(i + 1, normalized_record.url)
+    #     try:
+    #         insert_content(
+    #             user, content_repo, normalized_record, embedding_model=EMBED_MODEL
+    #         )
+    #     except sqlalchemy.exc.IntegrityError:
+    #         pass
+print(count)

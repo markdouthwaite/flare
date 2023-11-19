@@ -1,0 +1,2 @@
+class UrlUnfurlError(Exception):
+    pass
