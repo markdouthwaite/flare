@@ -23,6 +23,7 @@ def _get_item(backend: Backend, candidate: Candidate) -> Item:
         id=candidate.content_id,
         url=content.url,
         title=content.title,
+        image_url=content.content.get("image_url"),
         summary=backend.summarizer.summarize(content.content["body"]),
         score=candidate.score,
         featured=candidate.featured,
