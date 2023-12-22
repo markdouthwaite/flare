@@ -1,0 +1,43 @@
+MACHINE_LEARNING = [
+    "machine learning",
+    "artificial intelligence",
+    "data science",
+    "llm",
+    "generative ai",
+    "gen ai",
+    "mlops",
+    "pytorch",
+    "neural network",
+    "deep learning",
+    "large language models",
+    "time series",
+    "self-supervised learning",
+    "tensorflow",
+    "hugging face",
+    "transformer model",
+    "gpt",
+    "google gemini",
+    "deepmind",
+    "image classification",
+    "reinforcement learning",
+    "pre-trained model",
+    "neural text",
+    "open ai",
+    "openai",
+    "image recognition",
+    "speech recognition",
+    "cuda",
+    "jax",
+    "keras",
+    "machine intelligence",
+    "google brain",
+    "numpy",
+]
+
+
+def count_unique_hits(text: str, keywords: list) -> int:
+    count = 0
+    for keyword in keywords:
+        if keyword in text:
+            count += 1
+    return count

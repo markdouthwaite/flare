@@ -1,0 +1,2 @@
+class UrlExtractError(Exception):
+    pass
