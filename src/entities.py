@@ -67,6 +67,18 @@ class Source:
     url_patterns: Dict[str, Any]
 
 
+@dataclass
+class SuccessMessage:
+    title: str
+    message: str
+
+
+@dataclass
+class ErrorMessage:
+    title: str
+    message: str
+
+
 Sources = Dict[str, Source]
 
 HtmlDocument = bs4.BeautifulSoup
