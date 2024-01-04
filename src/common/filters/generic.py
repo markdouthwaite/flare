@@ -10,9 +10,7 @@ def is_english_language(post: Post):
 
 
 def mentions_machine_learning(post: Post, min_term_count: int = 2):
-    print(post.text.lower())
     counts = keywords.count_unique_hits(post.text.lower(), keywords.MACHINE_LEARNING)
-    print(counts)
     if counts >= min_term_count:
         return True
     else:
