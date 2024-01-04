@@ -5,9 +5,9 @@ from src.common.extract.errors import UrlExtractError
 from src.common.extract.validate import valid_url
 
 
-def extract_post(url: str, source: Source) -> Post:
+def extract_post(post_id: str, url: str, source: Source) -> Post:
     extracted_item = source.extractor(url)
-    post = to_post(extracted_item, source)
+    post = to_post(post_id, extracted_item, source)
     return post
 
 
@@ -25,6 +25,7 @@ def load_post(post: Post, repo: PostRepository) -> None:
 
 
 def extract_and_load_post(
+    post_id: str,
     url: str,
     source: Source,
     repo: PostRepository,
@@ -34,7 +35,7 @@ def extract_and_load_post(
     if validate_target_url and not valid_url(url, source):
         raise UrlExtractError("invalid url provided")
 
-    post = extract_post(url, source)
+    post = extract_post(post_id, url, source)
 
     if filtered and filter_post(post, source):
         raise UrlExtractError(
