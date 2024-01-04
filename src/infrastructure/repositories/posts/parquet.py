@@ -1,6 +1,7 @@
 import os
 import json
 from src.entities import Post
+from src.common.errors import PostReposistoryReadError
 import pandas as pd
 from dataclasses import asdict
 
@@ -22,6 +23,22 @@ class ParquetPostRepository:
             posts = []
         return posts
 
+    def get(self, post_id: str):
+        if os.path.exists(self.path):
+            df = pd.read_parquet(self.path)
+            df = df[df["id"] == post_id]
+            _posts = df.to_dict(orient="records")
+            if len(_posts) < 1:
+                raise PostReposistoryReadError(f"no such post with id '{post_id}'")
+            else:
+                # check for multiple posts?
+                post = _posts[0]
+                post["metadata"] = json.loads(post["metadata"])
+                return Post(**post)
+        else:
+            posts = []
+        return posts
+
     def insert(self, post: Post):
         dict_post = asdict(post)
         dict_post["metadata"] = json.dumps(post.metadata, default=str)
@@ -30,7 +47,9 @@ class ParquetPostRepository:
             if post.url not in df.url.values:
                 df = pd.concat([df, pd.DataFrame([dict_post])])
             else:
-                raise ValueError(f"url '{post.url}' already exists in posts repository")
+                raise PostReposistoryReadError(
+                    f"url '{post.url}' already exists in posts repository"
+                )
         else:
             df = pd.DataFrame([dict_post])
         df.to_parquet(self.path)
