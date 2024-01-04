@@ -1,13 +1,12 @@
 from src.entities import ExtractedItem, Post, Source, Tag
-from src.common.identifier import generate_id
 from src.common import locale
 from src.common.extract.metadata import get_read_time, get_readability
 from datetime import datetime
 
 
-def to_post(item: ExtractedItem, source: Source) -> Post:
+def to_post(post_id: str, item: ExtractedItem, source: Source) -> Post:
     post = Post(
-        id=generate_id(),
+        id=post_id,
         url=item.url,
         kind=source.kind,
         title=item.content.title,
