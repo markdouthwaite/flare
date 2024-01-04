@@ -19,16 +19,15 @@ def extract_and_load_posts():
         kwargs={
             "source": payload.get("source", "default"),
         },
+        task_id=post_id
     )
 
     message = SuccessMessage(
         title="extract-submit-success",
         message=f"successfully submitted for extraction: {post_id}",
     )
-    status = 200
 
     return Response(
-        status=status,
         response=json.dumps(asdict(message)),
         content_type="application/json",
     )
