@@ -1,0 +1,2 @@
+class PostReposistoryReadError(Exception):
+    pass
