@@ -9,7 +9,7 @@ def firehose(
 ) -> Feed:
     return Feed(
         name=name,
-        sections=[Section(name="firehose", posts=list(post_repo.list()))],
+        sections=[Section(name="main", posts=list(post_repo.list()))],
         updated_by="system",
         updated_at=datetime.now(),
     )
