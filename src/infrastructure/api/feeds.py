@@ -8,7 +8,7 @@ feeds_blueprint = Blueprint("feeds", __name__)
 
 
 @feeds_blueprint.get("/feeds/<feed_name>")
-def get_extracted_post(feed_name: str):
+def get_feed(feed_name: str):
     feeds_repo = current_app.config["feeds_repo"]
     feed = get_feed(feed_name, feeds_repo)
     return Response(
