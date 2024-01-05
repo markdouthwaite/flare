@@ -1,6 +1,7 @@
 import os
 import json
-from src.entities import Post
+from typing import Optional, Iterable
+from src.entities import Post, Condition
 from src.common.errors import PostReposistoryReadError
 import pandas as pd
 from dataclasses import asdict
@@ -11,7 +12,12 @@ class ParquetPostRepository:
         self.path = path
         self.primary_key = primary_key
 
-    def list(self):
+    def list(
+        self,
+        order_by: str = None,
+        descending: str = True,
+        where: Optional[Iterable[Condition]] = None,
+    ):
         if os.path.exists(self.path):
             df = pd.read_parquet(self.path)
             _posts = df.to_dict(orient="records")

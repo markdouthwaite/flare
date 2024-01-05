@@ -3,7 +3,7 @@ from urllib.parse import urlparse
 from typing import Optional, Any
 from src.entities import ExtractedItem, Content
 from src.common.identifier import generate_id
-from .metadata import get_meta, get_read_time, get_readability, get_locale
+from .metadata import get_meta
 from .html import html_parser
 from .errors import UrlExtractError
 

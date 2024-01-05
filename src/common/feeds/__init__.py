@@ -1,6 +1,5 @@
 from typing import Dict
-from src.entities.feeds import FeedBuildConfig, FeedBuildConfig
-from .firehose import firehose
+from src.entities.feeds import FeedBuildConfig
 
 
 def load_feed_configs(s) -> Dict[str, FeedBuildConfig]:

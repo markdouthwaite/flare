@@ -70,3 +70,10 @@ class Source:
 Sources = Dict[str, Source]
 
 HtmlDocument = bs4.BeautifulSoup
+
+
+@dataclass
+class Condition:
+    field_name: str
+    condition: str
+    value: Any
