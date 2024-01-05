@@ -3,7 +3,7 @@ from dataclasses import asdict
 from flask import Blueprint, Response
 from src.common.errors import PostReposistoryReadError
 from src.common.extract.errors import UrlExtractError
-from src.entities import ErrorMessage
+from src.entities.errors import ErrorMessage
 
 
 error_handler_blueprint = Blueprint("errors", __name__)

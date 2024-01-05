@@ -13,10 +13,10 @@ class ExtractedItemRepository(Protocol):
 
 
 class PostRepository(Protocol):
-    def page(self) -> Iterable[Post]:
+    def get(self) -> Post:
         pass
 
-    def get(self) -> Iterable[Post]:
+    def list(self) -> Iterable[Post]:
         pass
 
     def insert(self, post: Post):

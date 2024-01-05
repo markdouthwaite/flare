@@ -1,7 +1,7 @@
 import json
 from dataclasses import asdict
 from flask import Blueprint, request, current_app, Response
-from src.entities import SuccessMessage
+from src.entities.errors import SuccessMessage
 from src.common.identifier import generate_id
 
 
@@ -19,7 +19,7 @@ def extract_and_load_posts():
         kwargs={
             "source": payload.get("source", "default"),
         },
-        task_id=post_id
+        task_id=post_id,
     )
 
     message = SuccessMessage(
@@ -39,7 +39,7 @@ def get_extracted_post(post_id: str):
     post = posts_repo.get(post_id)
     return Response(
         json.dumps(asdict(post), default=lambda _: str(_)),
-        content_type="application/json"
+        content_type="application/json",
     )
 
 
@@ -49,5 +49,5 @@ def get_extracted_posts():
     posts = posts_repo.list()
     return Response(
         json.dumps([asdict(post) for post in posts], default=lambda _: str(_)),
-        content_type="application/json"
+        content_type="application/json",
     )

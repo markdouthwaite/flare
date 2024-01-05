@@ -1,10 +1,13 @@
 from src.infrastructure.repositories.posts import ParquetPostRepository
+from src.infrastructure.repositories.feeds import LocalFeedRepository
 from src.common.extract import arxiv, github
-from src.common import filters
+from src.common import filters, feeds
 
 POST_REPOSITORY = ParquetPostRepository(
     "data/development/posts.parquet", primary_key="url"
 )
+
+FEED_REPOSITORY = LocalFeedRepository("data/development/feeds")
 
 
 SOURCES = {
@@ -42,3 +45,5 @@ SOURCES = {
         ],
     },
 }
+
+FEEDS = {"firehose": {"builder": feeds.firehose, "kwargs": {}}}
