@@ -1,5 +1,5 @@
 from typing import Dict
-from src.common.feeds import firehose
+from src.common.feeds.firehose import firehose
 from src.entities.feeds import FeedBuildConfig
 
 
