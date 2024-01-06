@@ -39,7 +39,7 @@ def get_post_extraction_status(task_id: str):
             json.dumps(
                 {
                     "title": "successful-extraction",
-                    "message": "successfully extracted target url"
+                    "message": "successfully extracted target url",
                 }
             )
         )
@@ -48,7 +48,7 @@ def get_post_extraction_status(task_id: str):
             json.dumps(
                 {
                     "title": "failed-extraction",
-                    "message": "failed to extract target url"
+                    "message": "failed to extract target url",
                 }
             )
         )
@@ -57,7 +57,7 @@ def get_post_extraction_status(task_id: str):
             json.dumps(
                 {
                     "title": "pending-extraction",
-                    "message": "target url is being extracted, please wait."
+                    "message": "target url is being extracted, please wait.",
                 }
             )
         )
