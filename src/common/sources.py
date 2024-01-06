@@ -1,6 +1,8 @@
 from src.entities import Source, Sources
 from src.common.extract.metadata import summarize
 from src.common.extract import extract
+from src.common.scoring import default_scorer
+from src.common.plugins import prepare_plugin
 
 
 def load_sources(s) -> Sources:
@@ -9,10 +11,10 @@ def load_sources(s) -> Sources:
         sources[key] = Source(
             name=key,
             kind=value["kind"],
-            filters=value.get("filters", []),
-            extractor=value.get("extractor", extract),
-            summarizer=value.get("summarizer", summarize),
-            scorer=value.get("scorer", lambda _: 1.0),
+            filters=[prepare_plugin(_) for _ in value.get("filters", [])],
+            extractor=prepare_plugin(value.get("extractor", extract)),
+            summarizer=prepare_plugin(value.get("summarizer", summarize)),
+            scorer=prepare_plugin(value.get("scorer", default_scorer)),
             url_patterns=value.get("url_patterns", {}),
         )
 
