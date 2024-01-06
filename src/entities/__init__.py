@@ -52,7 +52,7 @@ class Post:
 
 Extractor = Callable[[str], ExtractedItem]
 Scorer = Callable[[ExtractedItem], float]
-Filter = Callable[[Post], bool]
+Filter = Callable[[ExtractedItem], bool]
 Summarizer = Callable[[str], str]
 
 

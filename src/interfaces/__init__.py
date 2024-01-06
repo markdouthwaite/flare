@@ -19,8 +19,11 @@ class PostRepository(Protocol):
     def list(self) -> Iterable[Post]:
         pass
 
-    def insert(self, post: Post):
+    def insert(self, post: Post, overwrite: bool = True):
         pass
 
     def insert_many(self, posts: Iterable[Post]):
+        pass
+
+    def exists(self, url: str) -> bool:
         pass

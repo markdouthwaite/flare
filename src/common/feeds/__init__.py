@@ -12,6 +12,4 @@ def load_feed_configs(s) -> Dict[str, FeedBuildConfig]:
     }
 
 
-__all__ = [
-    "load_feed_configs", "firehose"
-]
+__all__ = ["load_feed_configs", "firehose"]
