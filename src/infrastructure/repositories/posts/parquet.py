@@ -44,12 +44,12 @@ class ParquetPostRepository:
         else:
             raise PostReposistoryReadError(f"no such post with id '{post_id}'")
 
-    def insert(self, post: Post):
+    def insert(self, post: Post, overwrite: bool = True):
         dict_post = asdict(post)
         dict_post["metadata"] = json.dumps(post.metadata, default=str)
         if os.path.exists(self.path):
             df = pd.read_parquet(self.path)
-            if post.url not in df.url.values:
+            if post.url not in df.url.values or overwrite:
                 df = pd.concat([df, pd.DataFrame([dict_post])])
             else:
                 raise PostReposistoryReadError(
@@ -58,3 +58,14 @@ class ParquetPostRepository:
         else:
             df = pd.DataFrame([dict_post])
         df.to_parquet(self.path)
+
+    def exists(self, url: str) -> bool:
+        if os.path.exists(self.path):
+            df = pd.read_parquet(self.path)
+            df = df[df["url"] == url]
+            if len(df) > 0:
+                return True
+            else:
+                return False
+        else:
+            return False
