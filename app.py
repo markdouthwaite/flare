@@ -5,6 +5,7 @@ from src.infrastructure.queues import celery
 from src.infrastructure.api.feeds import feeds_blueprint
 from src.infrastructure.api.posts import posts_blueprint
 from src.infrastructure.api.errors import error_handler_blueprint
+from src.infrastructure.api.tasks import tasks_blueprint
 import settings
 
 
@@ -35,4 +36,5 @@ flask_app.celery = celery_app
 
 flask_app.register_blueprint(feeds_blueprint)
 flask_app.register_blueprint(posts_blueprint)
+flask_app.register_blueprint(tasks_blueprint)
 flask_app.register_blueprint(error_handler_blueprint)
