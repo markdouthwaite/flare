@@ -10,12 +10,14 @@ def get_feed(name: str, feed_repo: FeedRepository) -> Feed:
 def create_or_update_feed(
     name: str,
     build_config: FeedBuildConfig,
-    post_repo: PostRepository,
-    feed_repo: FeedRepository,
+    posts_repo: PostRepository,
+    feeds_repo: FeedRepository,
 ):
-    feed = build_config.builder(name, build_config.args, build_config.kwargs, post_repo)
+    feed = build_config.builder(
+        name, build_config.args, build_config.kwargs, posts_repo
+    )
 
-    if feed_repo.exists(name):
-        feed_repo.update(name, feed)
+    if feeds_repo.exists(name):
+        feeds_repo.update(name, feed)
     else:
-        feed_repo.create(name, feed)
+        feeds_repo.create(name, feed)
