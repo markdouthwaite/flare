@@ -1,15 +1,15 @@
 from datetime import datetime
-from src.entities import Post
+from src.entities import ExtractedItem
 
 
-def is_popular_repo(post: Post, min_stars: int = 25) -> bool:
-    if post.metadata.get("stars", 0) < min_stars:
+def is_popular_repo(item: ExtractedItem, min_stars: int = 25) -> bool:
+    if item.metadata.get("stars", 0) < min_stars:
         return False
     else:
         return True
 
 
-def is_not_malware_repo(post: Post) -> bool:
+def is_not_malware_repo(item: ExtractedItem) -> bool:
     toxic_terms = [
         "utorrent",
         "cheat",
@@ -22,24 +22,23 @@ def is_not_malware_repo(post: Post) -> bool:
         "privatecheat",
         "cheats",
         "controlnet",
-        "xanthus",
         "activator",
     ]
-    if any(term in post.title for term in toxic_terms):
+    if any(term in item.content.title for term in toxic_terms):
         return False
     else:
         return True
 
 
-def is_python_repo(post: Post) -> bool:
-    if post.metadata.get("language") not in ["Python", "Jupyter Notebook"]:
+def is_python_repo(item: ExtractedItem) -> bool:
+    if item.metadata.get("language") not in ["Python", "Jupyter Notebook"]:
         return False
     else:
         return True
 
 
-def is_active_repo(post: Post, last_active_in_days: int = 90) -> bool:
-    updated_at = post.metadata.get("updated_at")
+def is_active_repo(item: ExtractedItem, last_active_in_days: int = 90) -> bool:
+    updated_at = item.metadata.get("updated_at")
     timestamp = datetime.strptime(updated_at, "%Y-%m-%dT%H:%M:%SZ")
     if (datetime.now() - timestamp).days <= last_active_in_days:
         return True
