@@ -1,12 +1,8 @@
 from src.entities import Post, Source, ExtractedItem
 from src.interfaces import PostRepository
 from src.common.posts import to_post
-from src.common.extract.errors import UrlExtractError
+from src.common.extract.errors import UrlExtractError, UrlExtractFilterException
 from src.common.extract.validate import valid_url
-
-
-class UrlExtractFilterException(Exception):
-    pass
 
 
 def filter_item(
