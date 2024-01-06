@@ -42,8 +42,7 @@ class ParquetPostRepository:
                 post["metadata"] = json.loads(post["metadata"])
                 return Post(**post)
         else:
-            posts = []
-        return posts
+            raise PostReposistoryReadError(f"no such post with id '{post_id}'")
 
     def insert(self, post: Post):
         dict_post = asdict(post)

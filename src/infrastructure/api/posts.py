@@ -3,6 +3,7 @@ from dataclasses import asdict
 from flask import Blueprint, request, current_app, Response
 from src.entities.errors import SuccessMessage
 from src.common.identifier import generate_id
+from src.infrastructure.tasks.posts import extract_and_load_post
 
 
 posts_blueprint = Blueprint("posts", __name__)
@@ -13,18 +14,13 @@ def extract_and_load_posts():
     payload = request.json
     post_id = generate_id()
 
-    current_app.celery.send_task(
-        "src.infrastructure.tasks.extract_and_load_post",
-        args=(post_id, payload["url"]),
-        kwargs={
-            "source": payload.get("source", "default"),
-        },
-        task_id=post_id,
+    extract_and_load_post.delay(
+        post_id, payload["url"], source_name=payload.get("source", "default")
     )
 
     message = SuccessMessage(
         title="extract-submit-success",
-        message=f"successfully submitted for extraction: {post_id}",
+        message=f"successfully submitted task '{post_id}' for extraction",
     )
 
     return Response(
@@ -37,6 +33,7 @@ def extract_and_load_posts():
 def get_extracted_post(post_id: str):
     posts_repo = current_app.config["posts_repo"]
     post = posts_repo.get(post_id)
+    print(post)
     return Response(
         json.dumps(asdict(post), default=lambda _: str(_)),
         content_type="application/json",

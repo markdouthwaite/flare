@@ -6,3 +6,5 @@ nltk
 celery
 flask
 redis
+pandas
+pyarrow
