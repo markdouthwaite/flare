@@ -20,18 +20,16 @@ flask_app.config.from_mapping(
         broker_url="redis://0.0.0.0:6379/0",
         result_backend="redis://0.0.0.0:6379/0",
         task_ignore_result=True,
-        imports=("src.infrastructure.tasks", )
+        imports=("src.infrastructure.tasks",),
     ),
     SOURCES=sources,
     FEEDS=feeds,
     POSTS_REPO=posts_repo,
-    FEEDS_REPO=feeds_repo
+    FEEDS_REPO=feeds_repo,
 )
 
 celery_app = celery.init_app(flask_app)
-celery_app.conf.update(
-    flask_app.config
-)
+celery_app.conf.update(flask_app.config)
 
 flask_app.celery = celery_app
 
