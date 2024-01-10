@@ -34,7 +34,6 @@ def extract_and_load_posts():
 def get_extracted_post(post_id: str):
     posts_repo = current_app.config["posts_repo"]
     post = posts_repo.get(post_id)
-    print(post)
     return Response(
         json.dumps(asdict(post), default=lambda _: str(_)),
         content_type="application/json",
