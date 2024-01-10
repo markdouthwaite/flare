@@ -1,3 +1,2 @@
-jupyterlab
 pytest
-fire
+pre-commit

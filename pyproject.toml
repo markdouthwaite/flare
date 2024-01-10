@@ -1,0 +1,48 @@
+[build-system]
+requires = ["flit_core >=3.2,<4"]
+build-backend = "flit_core.buildapi"
+
+[project]
+name = "flare"
+authors = [{name = "Mark Douthwaite", email = "mark@douthwaite.io"}]
+license = {file = "LICENSE"}
+readme = "README.md"
+classifiers = ["License :: OSI Approved :: MIT License"]
+requires-python = ">=3.9"
+dynamic = ["version", "description"]
+dependencies = [
+    "pycld2",
+    "textstat",
+    "beautifulsoup4",
+    "requests",
+    "celery",
+    "nltk",
+    "flask",
+    "redis",
+    "pandas",
+    "pyarrow"
+]
+
+[project.optional-dependencies]
+test = ["pytest"]
+dev = ["pre-commit>=3.0.0"]
+doc = ["mkdocs-material"]
+
+[tool.ruff]
+select = [
+    "E",  # pycodestyle errors
+    "W",  # pycodestyle warnings
+    "F",  # pyflakes
+    "I",  # isort
+    "C",  # flake8-comprehensions
+    "B",  # flake8-bugbear
+]
+ignore = [
+    "E501",  # line too long, handled by black
+    "B008",  # do not perform function calls in argument defaults
+    "C901",  # too complex
+]
+
+[pydocstyle]
+convention = "numpy"
+add-ignore = "D100,D101,D104,D105,D203,D405"
