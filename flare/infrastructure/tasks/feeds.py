@@ -1,5 +1,6 @@
 from celery import current_app, shared_task
-from src.commands.feeds import create_or_update_feed as _create_or_update_feed
+
+from flare.commands.feeds import create_or_update_feed as _create_or_update_feed
 
 
 @shared_task(ignore_result=False)

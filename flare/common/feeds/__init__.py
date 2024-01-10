@@ -1,7 +1,7 @@
 from typing import Dict
 
-from src.common.feeds.firehose import firehose
-from src.entities.feeds import FeedBuildConfig
+from flare.common.feeds.firehose import firehose
+from flare.entities.feeds import FeedBuildConfig
 
 
 def load_feed_configs(s) -> Dict[str, FeedBuildConfig]:

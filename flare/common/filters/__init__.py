@@ -1,3 +1,3 @@
-from src.common.filters import generic, github
+from flare.common.filters import generic, github
 
 __all__ = ["github", "generic"]

@@ -1,8 +1,8 @@
-from src.common.extract import extract
-from src.common.extract.metadata import summarize
-from src.common.plugins import prepare_plugin
-from src.common.scoring import default_scorer
-from src.entities import Source, Sources
+from flare.common.extract import extract
+from flare.common.extract.metadata import summarize
+from flare.common.plugins import prepare_plugin
+from flare.common.scoring import default_scorer
+from flare.entities import Source, Sources
 
 
 def load_sources(s) -> Sources:

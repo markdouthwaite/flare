@@ -2,8 +2,9 @@ from datetime import datetime
 from typing import Any, Dict, List, Optional
 
 import requests
-from src.common.identifier import generate_id
-from src.entities import Content, ExtractedItem, HtmlDocument
+
+from flare.common.identifier import generate_id
+from flare.entities import Content, ExtractedItem, HtmlDocument
 
 from .errors import UrlExtractError
 from .html import html_parser

@@ -1,11 +1,12 @@
 from flask import Flask
-from src.common.feeds import load_feed_configs
-from src.common.sources import load_sources
-from src.infrastructure.api.errors import error_handler_blueprint
-from src.infrastructure.api.feeds import feeds_blueprint
-from src.infrastructure.api.posts import posts_blueprint
-from src.infrastructure.api.tasks import tasks_blueprint
-from src.infrastructure.queues import celery
+
+from flare.common.feeds import load_feed_configs
+from flare.common.sources import load_sources
+from flare.infrastructure.api.errors import error_handler_blueprint
+from flare.infrastructure.api.feeds import feeds_blueprint
+from flare.infrastructure.api.posts import posts_blueprint
+from flare.infrastructure.api.tasks import tasks_blueprint
+from flare.infrastructure.queues import celery
 
 
 def create_app(settings):

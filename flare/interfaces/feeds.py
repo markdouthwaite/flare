@@ -1,6 +1,6 @@
 from typing import Protocol
 
-from src.entities.feeds import Feed
+from flare.entities.feeds import Feed
 
 
 class FeedRepository(Protocol):

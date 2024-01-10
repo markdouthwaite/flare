@@ -4,8 +4,9 @@ from dataclasses import asdict
 from typing import Iterable, Optional
 
 import pandas as pd
-from src.common.errors import PostReposistoryReadError
-from src.entities import Condition, Post
+
+from flare.common.errors import PostReposistoryReadError
+from flare.entities import Condition, Post
 
 
 class ParquetPostRepository:

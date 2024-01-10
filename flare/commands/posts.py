@@ -1,8 +1,8 @@
-from src.common.extract.errors import UrlExtractError, UrlExtractFilterException
-from src.common.extract.validate import valid_url
-from src.common.posts import to_post
-from src.entities import ExtractedItem, Post, Source
-from src.interfaces import PostRepository
+from flare.common.extract.errors import UrlExtractError, UrlExtractFilterException
+from flare.common.extract.validate import valid_url
+from flare.common.posts import to_post
+from flare.entities import ExtractedItem, Post, Source
+from flare.interfaces import PostRepository
 
 
 def filter_item(

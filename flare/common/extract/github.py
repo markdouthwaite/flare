@@ -1,9 +1,9 @@
 import json
 from typing import Optional, Tuple
 
-from src.common.extract import http
-from src.common.identifier import generate_id
-from src.entities import Content, ExtractedItem
+from flare.common.extract import http
+from flare.common.identifier import generate_id
+from flare.entities import Content, ExtractedItem
 
 from .errors import UrlExtractError
 

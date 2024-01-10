@@ -1,6 +1,6 @@
-from src.entities.feeds import Feed, FeedBuildConfig
-from src.interfaces import PostRepository
-from src.interfaces.feeds import FeedRepository
+from flare.entities.feeds import Feed, FeedBuildConfig
+from flare.interfaces import PostRepository
+from flare.interfaces.feeds import FeedRepository
 
 
 def get_feed(name: str, feed_repo: FeedRepository) -> Feed:

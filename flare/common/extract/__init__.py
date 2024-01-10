@@ -2,8 +2,9 @@ from typing import Any, Optional
 from urllib.parse import urlparse
 
 import requests
-from src.common.identifier import generate_id
-from src.entities import Content, ExtractedItem
+
+from flare.common.identifier import generate_id
+from flare.entities import Content, ExtractedItem
 
 from .errors import UrlExtractError
 from .html import html_parser

@@ -1,3 +1,3 @@
-from src.infrastructure.repositories.posts.parquet import ParquetPostRepository
+from flare.infrastructure.repositories.posts.parquet import ParquetPostRepository
 
 __all__ = ["ParquetPostRepository"]
