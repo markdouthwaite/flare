@@ -34,4 +34,4 @@ def create_app(settings):
     flask_app.register_blueprint(posts_blueprint)
     flask_app.register_blueprint(tasks_blueprint)
     flask_app.register_blueprint(error_handler_blueprint)
-    return flask_app
+    return flask_app, celery_app
