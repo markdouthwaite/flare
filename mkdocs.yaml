@@ -1,0 +1,11 @@
+site_name: Flare
+repo_name: markdouthwaite/flare
+repo_url: https://github.com/markdouthwaite/flare
+
+nav:
+  - Introduction: 'index.md'
+
+theme:
+    name: material
+
+copyright: Copyright &copy; Mark Douthwaite
