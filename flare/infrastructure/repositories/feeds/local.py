@@ -2,8 +2,8 @@ import json
 from dataclasses import asdict
 from pathlib import Path
 
-from src.common.errors import FeedRepositoryReadError, FeedRepositoryWriteError
-from src.entities.feeds import Feed
+from flare.common.errors import FeedRepositoryReadError, FeedRepositoryWriteError
+from flare.entities.feeds import Feed
 
 
 class LocalFeedRepository:

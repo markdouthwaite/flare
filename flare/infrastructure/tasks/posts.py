@@ -1,5 +1,6 @@
 from celery import current_app, shared_task
-from src.commands.posts import extract_and_load_post as _extract_and_load_post
+
+from flare.commands.posts import extract_and_load_post as _extract_and_load_post
 
 
 @shared_task(ignore_result=False)

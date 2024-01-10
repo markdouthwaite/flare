@@ -2,8 +2,8 @@ import math
 from random import randint, random
 from typing import List
 
-from src.common.keywords import count_total_hits
-from src.entities import ExtractedItem, Post
+from flare.common.keywords import count_total_hits
+from flare.entities import ExtractedItem, Post
 
 
 def decay(s, t, h):

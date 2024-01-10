@@ -1,12 +1,12 @@
 from datetime import datetime
 from typing import Any, Dict, Tuple
 
-from src.entities.feeds import Feed, Section
-from src.interfaces import PostRepository
+from flare.entities.feeds import Feed, Section
+from flare.interfaces import PostRepository
 
 
 def firehose(
-    name: str, args: Tuple[Any, ...], kwargs: Dict[Any, Any], post_repo: PostRepository
+    name: str, _: Tuple[Any, ...], __: Dict[Any, Any], post_repo: PostRepository
 ) -> Feed:
     return Feed(
         name=name,

@@ -1,8 +1,8 @@
 from datetime import datetime
 
-from src.common import locale
-from src.common.extract.metadata import get_read_time, get_readability
-from src.entities import ExtractedItem, Post, Source, Tag
+from flare.common import locale
+from flare.common.extract.metadata import get_read_time, get_readability
+from flare.entities import ExtractedItem, Post, Source, Tag
 
 
 def to_post(post_id: str, item: ExtractedItem, source: Source) -> Post:

@@ -3,9 +3,10 @@ from dataclasses import asdict
 
 from flask import Blueprint, Response
 from kombu.exceptions import OperationalError
-from src.common.errors import PostReposistoryReadError
-from src.common.extract.errors import UrlExtractError
-from src.entities.errors import ErrorMessage
+
+from flare.common.errors import PostReposistoryReadError
+from flare.common.extract.errors import UrlExtractError
+from flare.entities.errors import ErrorMessage
 
 error_handler_blueprint = Blueprint("errors", __name__)
 

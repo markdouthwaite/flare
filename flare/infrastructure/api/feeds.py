@@ -2,9 +2,10 @@ import json
 from dataclasses import asdict
 
 from flask import Blueprint, Response, current_app, request
-from src.commands.feeds import get_feed
-from src.entities.errors import SuccessMessage
-from src.infrastructure.tasks.feeds import create_or_update_feed
+
+from flare.commands.feeds import get_feed
+from flare.entities.errors import SuccessMessage
+from flare.infrastructure.tasks.feeds import create_or_update_feed
 
 feeds_blueprint = Blueprint("feeds", __name__)
 

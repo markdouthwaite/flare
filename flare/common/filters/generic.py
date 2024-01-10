@@ -1,6 +1,6 @@
-from src.common import keywords
-from src.common.extract.metadata import get_locale
-from src.entities import ExtractedItem
+from flare.common import keywords
+from flare.common.extract.metadata import get_locale
+from flare.entities import ExtractedItem
 
 
 def is_english_language(item: ExtractedItem):

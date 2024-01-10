@@ -2,9 +2,10 @@ import json
 from dataclasses import asdict
 
 from flask import Blueprint, Response, current_app, request
-from src.common.identifier import generate_id
-from src.entities.errors import SuccessMessage
-from src.infrastructure.tasks.posts import extract_and_load_post
+
+from flare.common.identifier import generate_id
+from flare.entities.errors import SuccessMessage
+from flare.infrastructure.tasks.posts import extract_and_load_post
 
 posts_blueprint = Blueprint("posts", __name__)
 

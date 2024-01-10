@@ -1,6 +1,6 @@
 from typing import Iterable, Protocol
 
-from src.entities import ExtractedItem, Post
+from flare.entities import ExtractedItem, Post
 
 
 class ExtractedItemFilter(Protocol):

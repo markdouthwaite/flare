@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from src.entities import ExtractedItem
+from flare.entities import ExtractedItem
 
 
 def is_popular_repo(item: ExtractedItem, min_stars: int = 25) -> bool:

@@ -2,7 +2,7 @@ from dataclasses import dataclass, field
 from datetime import datetime
 from typing import Any, Callable, Dict, List, Optional, Tuple
 
-from src.interfaces import PostRepository
+from flare.interfaces import PostRepository
 
 from . import Post
 

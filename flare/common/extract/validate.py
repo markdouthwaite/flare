@@ -1,6 +1,6 @@
 import re
 
-from src.entities import Source
+from flare.entities import Source
 
 
 def valid_url(url: str, source: Source) -> bool:
