@@ -30,7 +30,7 @@ def get_open_graph_meta(s):
         "title": _get_open_graph_property(s, "title"),
         "description": _get_open_graph_property(s, "description"),
         "image": _get_open_graph_property(s, "image"),
-        "type": _get_open_graph_property(s, "type")
+        "type": _get_open_graph_property(s, "type"),
     }
 
 
@@ -39,7 +39,7 @@ def get_twitter_card_meta(s):
         "title": _get_twitter_meta(s, "title"),
         "description": _get_twitter_meta(s, "description"),
         "image": _get_twitter_meta(s, "image"),
-        "type": _get_twitter_meta(s, "type")
+        "type": _get_twitter_meta(s, "type"),
     }
 
 

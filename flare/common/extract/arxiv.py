@@ -64,7 +64,7 @@ def get_paper_info(doc: HtmlDocument) -> Dict[str, Any]:
         "authors": get_authors(doc),
         "subjects": get_subjects(doc),
         "comments": get_comments(doc),
-        "journal_ref": get_journal_reference(doc)
+        "journal_ref": get_journal_reference(doc),
     }
 
 

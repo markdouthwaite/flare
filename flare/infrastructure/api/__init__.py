@@ -17,7 +17,7 @@ def create_app(settings):
     flask_app.config.from_mapping(
         CELERY={
             "broker_url": settings.BROKER_URL,
-            "result_backend": settings.RESULT_BACKEND
+            "result_backend": settings.RESULT_BACKEND,
         },
         SOURCES=sources,
         FEEDS=feeds,
@@ -27,7 +27,7 @@ def create_app(settings):
 
     celery_app = celery.init_app(flask_app)
     celery_app.conf.update(flask_app.config)
-
+    celery_app.conf.update(include=["flare.infrastructure.tasks.posts"])
     flask_app.celery = celery_app
 
     flask_app.register_blueprint(feeds_blueprint)
