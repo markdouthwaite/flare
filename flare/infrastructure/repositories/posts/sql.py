@@ -61,11 +61,16 @@ class SQLPostRepository:
         self,
         order_by: Optional[str] = None,
         where: Optional[Iterable[Condition]] = None,
+        limit: Optional[int] = None,
+        descending: bool = False
     ):
         statement = select(_posts)
 
         if order_by is not None:
-            statement = statement.order_by(order_by)
+            order_by_column = getattr(_posts.c, order_by)
+            if descending:
+                order_by_column = order_by_column.desc()
+            statement = statement.order_by(order_by_column)
 
         if where is not None:
             for condition in where:
@@ -77,6 +82,9 @@ class SQLPostRepository:
                     raise PostRepositoryReadError(
                         f"unknown operator in condition '{condition.operator}'."
                     )
+
+        if limit is not None:
+            statement = statement.limit(limit)
 
         with self.engine.connect() as conn:
             res = conn.execute(statement)

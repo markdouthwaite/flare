@@ -1,5 +1,6 @@
 import json
 from dataclasses import asdict
+from typing import Optional
 
 from flask import Blueprint, Response, current_app, request
 
@@ -41,9 +42,9 @@ def get_extracted_post(post_id: str):
 
 
 @posts_blueprint.get("/posts")
-def get_extracted_posts():
+def get_extracted_posts(limit: Optional[int] = None, order_by: Optional[str] = None, descending: bool = False):
     posts_repo = current_app.config["POSTS_REPO"]
-    posts = posts_repo.list()
+    posts = posts_repo.list(limit=limit, order_by=order_by, descending=descending)
     return Response(
         json.dumps([asdict(post) for post in posts], default=lambda _: str(_)),
         content_type="application/json",
