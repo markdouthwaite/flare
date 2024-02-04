@@ -74,7 +74,7 @@ class SQLPostRepository:
             statement = statement.order_by(order_by_column)
 
         if featured:
-            statement = statement.where(_posts.c.featured is True)
+            statement = statement.where(_posts.c.featured.is_(True))
 
         if where is not None:
             for condition in where:
