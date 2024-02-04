@@ -1,3 +1,5 @@
+import json
+
 from flare.common.extract.errors import UrlExtractError, UrlExtractFilterException
 from flare.common.extract.validate import valid_url
 from flare.common.posts import to_post
@@ -81,3 +83,14 @@ def extract_and_load_post(
             "cannot load extracted post: "
             "the post could not be loaded into the target repository"
         ) from err
+
+
+def load_from_disk(path: str, repo: PostRepository):
+    """Load JSONL structured Posts into the target repository."""
+
+    with open(path, "r") as posts_file:
+        for raw_post_data in posts_file:
+            if len(raw_post_data) > 0:
+                data = json.loads(raw_post_data)
+                post = Post(**data)
+                repo.insert(post)
