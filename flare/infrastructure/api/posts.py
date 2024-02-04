@@ -44,11 +44,17 @@ def get_extracted_post(post_id: str):
 def get_extracted_posts():
     args = request.args
     posts_repo = current_app.config["POSTS_REPO"]
+    descending = args.get("descending")
+
+    if descending.lower() == "true":
+        descending = True
+    else:
+        descending = False
 
     posts = posts_repo.list(
         limit=args.get("limit"),
         order_by=args.get("order_by"),
-        descending=args.get("descending", type=bool),
+        descending=descending,
     )
     return Response(
         json.dumps([asdict(post) for post in posts], default=lambda _: str(_)),
