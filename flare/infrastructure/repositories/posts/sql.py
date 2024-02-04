@@ -63,7 +63,8 @@ class SQLPostRepository:
         where: Optional[Iterable[Condition]] = None,
         limit: Optional[int] = None,
         descending: bool = False,
-        featured: bool = False
+        featured: bool = False,
+        kind: Optional[str] = None,
     ):
         statement = select(_posts)
 
@@ -75,6 +76,9 @@ class SQLPostRepository:
 
         if featured:
             statement = statement.where(_posts.c.featured.is_(True))
+
+        if kind is not None:
+            statement = statement.where(_posts.c.kind.is_(kind))
 
         if where is not None:
             for condition in where:

@@ -3,8 +3,8 @@ from dataclasses import asdict
 
 from flask import Blueprint, Response, current_app, request
 
-from flare.common.parameters import boolean_parameter
 from flare.common.identifier import generate_id
+from flare.common.parameters import boolean_parameter
 from flare.entities.errors import SuccessMessage
 from flare.infrastructure.tasks.posts import extract_and_load_post
 
@@ -53,7 +53,8 @@ def get_extracted_posts():
         limit=args.get("limit"),
         order_by=args.get("order_by"),
         descending=descending,
-        featured=featured
+        featured=featured,
+        kind=args.get("kind"),
     )
     return Response(
         json.dumps([asdict(post) for post in posts], default=lambda _: str(_)),
