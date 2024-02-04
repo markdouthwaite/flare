@@ -40,7 +40,7 @@ MACHINE_LEARNING = [
     "unet",
     "text-to-image",
     "stable diffusion",
-    "autoencoder"
+    "autoencoder",
 ]
 
 
