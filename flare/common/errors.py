@@ -1,4 +1,8 @@
-class PostReposistoryReadError(Exception):
+class PostRepositoryReadError(Exception):
+    pass
+
+
+class PostRepositoryWriteError(Exception):
     pass
 
 
