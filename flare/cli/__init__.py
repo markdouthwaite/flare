@@ -1,4 +1,5 @@
 import typer
+
 from flare.cli import develop
 
 app = typer.Typer()

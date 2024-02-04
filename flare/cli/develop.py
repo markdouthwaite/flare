@@ -1,6 +1,7 @@
-import os
-import typer
 import importlib.util
+
+import typer
+
 from flare.commands.posts import load_from_disk
 
 app = typer.Typer()

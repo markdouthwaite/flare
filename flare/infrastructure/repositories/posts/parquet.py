@@ -5,7 +5,7 @@ from typing import Iterable, Optional
 
 import pandas as pd
 
-from flare.common.errors import PostRepositoryWriteError, PostRepositoryReadError
+from flare.common.errors import PostRepositoryReadError, PostRepositoryWriteError
 from flare.entities import Condition, Post
 
 
