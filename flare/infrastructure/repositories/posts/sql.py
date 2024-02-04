@@ -14,7 +14,7 @@ from sqlalchemy import (
     create_engine,
     select,
 )
-from sqlalchemy.exc import IntegrityError
+from sqlalchemy.exc import IntegrityError, OperationalError
 
 from flare.common.errors import PostRepositoryReadError, PostRepositoryWriteError
 from flare.entities import Condition, Post
@@ -52,7 +52,10 @@ class SQLPostRepository:
         self._maybe_create()
 
     def _maybe_create(self):
-        _posts.create(self.engine)
+        try:
+            _posts.create(self.engine)
+        except OperationalError:
+            print("table already exists")
 
     def list(
         self,
