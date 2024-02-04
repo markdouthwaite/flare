@@ -4,7 +4,7 @@ from dataclasses import asdict
 from flask import Blueprint, Response
 from kombu.exceptions import OperationalError
 
-from flare.common.errors import PostReposistoryReadError
+from flare.common.errors import PostRepositoryReadError
 from flare.common.extract.errors import UrlExtractError
 from flare.entities.errors import ErrorMessage
 
@@ -20,8 +20,8 @@ def handle_url_extraction_error(error: UrlExtractError):
     )
 
 
-@error_handler_blueprint.app_errorhandler(PostReposistoryReadError)
-def handle_post_repository_read_error(error: PostReposistoryReadError):
+@error_handler_blueprint.app_errorhandler(PostRepositoryReadError)
+def handle_post_repository_read_error(error: PostRepositoryReadError):
     message = ErrorMessage(title="repository-read-error", message=error.args[0])
 
     return Response(
@@ -30,7 +30,7 @@ def handle_post_repository_read_error(error: PostReposistoryReadError):
 
 
 @error_handler_blueprint.app_errorhandler(OperationalError)
-def handle_backend_error(error: PostReposistoryReadError):
+def handle_backend_error(error: PostRepositoryReadError):
     message = ErrorMessage(title="backend-error", message=error.args[0])
 
     return Response(
