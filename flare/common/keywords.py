@@ -32,6 +32,15 @@ MACHINE_LEARNING = [
     "machine intelligence",
     "google brain",
     "numpy",
+    "diffusion model",
+    "transformer block",
+    "convolution block",
+    "attention layer",
+    "feed-forward layer",
+    "unet",
+    "text-to-image",
+    "stable diffusion",
+    "autoencoder"
 ]
 
 
