@@ -32,7 +32,7 @@ def extract_and_load_posts():
 
 @posts_blueprint.get("/posts/<post_id>")
 def get_extracted_post(post_id: str):
-    posts_repo = current_app.config["posts_repo"]
+    posts_repo = current_app.config["POSTS_REPO"]
     post = posts_repo.get(post_id)
     return Response(
         json.dumps(asdict(post), default=lambda _: str(_)),
@@ -42,7 +42,7 @@ def get_extracted_post(post_id: str):
 
 @posts_blueprint.get("/posts")
 def get_extracted_posts():
-    posts_repo = current_app.config["posts_repo"]
+    posts_repo = current_app.config["POSTS_REPO"]
     posts = posts_repo.list()
     return Response(
         json.dumps([asdict(post) for post in posts], default=lambda _: str(_)),
