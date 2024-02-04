@@ -29,6 +29,9 @@ test = ["pytest"]
 dev = ["pre-commit>=3.0.0"]
 doc = ["mkdocs-material"]
 
+[project.scripts]
+flare = "flare.cli:app"
+
 [tool.ruff]
 select = [
     "E",  # pycodestyle errors
