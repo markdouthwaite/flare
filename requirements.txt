@@ -1,0 +1,12 @@
+pycld2
+textstat
+beautifulsoup4
+requests
+nltk
+celery
+flask
+redis
+pandas
+pyarrow
+sqlalchemy
+typer
