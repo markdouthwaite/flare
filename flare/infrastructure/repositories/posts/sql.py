@@ -62,7 +62,7 @@ class SQLPostRepository:
         order_by: Optional[str] = None,
         where: Optional[Iterable[Condition]] = None,
         limit: Optional[int] = None,
-        descending: bool = False
+        descending: bool = False,
     ):
         statement = select(_posts)
 
@@ -85,7 +85,7 @@ class SQLPostRepository:
 
         if limit is not None:
             statement = statement.limit(limit)
-
+        print(order_by, limit, descending)
         with self.engine.connect() as conn:
             res = conn.execute(statement)
             return [Post(*p) for p in res.fetchall()]
