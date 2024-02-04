@@ -42,14 +42,10 @@ def get_extracted_post(post_id: str):
 
 
 @posts_blueprint.get("/posts")
-def get_extracted_posts(
-    limit: Optional[int] = None,
-    order_by: Optional[str] = None,
-    descending: bool = False,
-):
+def get_extracted_posts():
+    args = request.args
     posts_repo = current_app.config["POSTS_REPO"]
-    current_app.logger.info(limit, order_by, descending)
-    posts = posts_repo.list(limit=limit, order_by=order_by, descending=descending)
+    posts = posts_repo.list(limit=args.get("limit"), order_by=args.get("order_by"), descending=args.get("descending"))
     return Response(
         json.dumps([asdict(post) for post in posts], default=lambda _: str(_)),
         content_type="application/json",
