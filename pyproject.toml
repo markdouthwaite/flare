@@ -20,7 +20,8 @@ dependencies = [
     "flask",
     "redis",
     "pandas",
-    "pyarrow"
+    "pyarrow",
+    "sqlalchemy"
 ]
 
 [project.optional-dependencies]
