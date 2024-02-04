@@ -102,4 +102,5 @@ def load_from_disk(path: str, repo: PostRepository):
                     post.updated_at = datetime.strptime(
                         post.updated_at, "%Y-%m-%d %H:%M:%S.%f"
                     )
+
                 repo.insert(post)
