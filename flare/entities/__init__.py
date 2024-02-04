@@ -75,5 +75,5 @@ HtmlDocument = bs4.BeautifulSoup
 @dataclass
 class Condition:
     field_name: str
-    condition: str
+    operator: str
     value: Any
