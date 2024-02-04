@@ -5,7 +5,7 @@ from typing import Iterable, Optional
 
 import pandas as pd
 
-from flare.common.errors import PostRepositoryReadError, FeedRepositoryWriteError
+from flare.common.errors import PostRepositoryWriteError, PostRepositoryReadError
 from flare.entities import Condition, Post
 
 
@@ -53,7 +53,7 @@ class ParquetPostRepository:
             if post.url not in df.url.values:
                 df = pd.concat([df, pd.DataFrame([dict_post])])
             else:
-                raise FeedRepositoryWriteError(
+                raise PostRepositoryWriteError(
                     f"url '{post.url}' already exists in posts repository"
                 )
         else:
