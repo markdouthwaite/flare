@@ -6,6 +6,7 @@ import requests
 from flare.common.identifier import generate_id
 from flare.entities import Content, ExtractedItem
 
+from . import arxiv, github
 from .errors import UrlExtractError
 from .html import html_parser
 from .metadata import get_meta
@@ -34,24 +35,14 @@ def _parse_generic(
     return extracted
 
 
-def _parse_response(url: str, res: requests.Response, **kwargs: Any) -> ExtractedItem:
-    domain = urlparse(url).netloc
-
-    match domain:
-        case _:
-            raw_content = _parse_generic(url, res, **kwargs)
-
-    return raw_content
-
-
-def extract(
+def default_extract(
     url: str,
     method: str = "GET",
     user_agent: str = "Mozilla/5.0",
     accept_language: str = "en-US,en;q=0.5",
     custom_headers: Optional[dict] = None,
     **kwargs: Any,
-) -> ExtractedItem:
+):
     custom_headers = custom_headers or {}
     response = requests.request(
         method,
@@ -64,6 +55,34 @@ def extract(
     )
 
     if response.ok:
-        return _parse_response(url, response, **kwargs)
+        return _parse_generic(url, response, **kwargs)
     else:
         raise UrlExtractError(f"failed to unfurl target url '{url}'")
+
+
+def extract(
+    url: str,
+    method: str = "GET",
+    user_agent: str = "Mozilla/5.0",
+    accept_language: str = "en-US,en;q=0.5",
+    custom_headers: Optional[dict] = None,
+    **kwargs: Any,
+) -> ExtractedItem:
+    domain = urlparse(url).netloc
+
+    match domain:
+        case "arxiv.org":
+            adapter = arxiv.extract
+        case "github.com":
+            adapter = github.extract
+        case _:
+            adapter = default_extract
+
+    return adapter(
+        url,
+        method,
+        user_agent=user_agent,
+        accept_language=accept_language,
+        custom_headers=custom_headers,
+        **kwargs,
+    )
