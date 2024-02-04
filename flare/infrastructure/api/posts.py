@@ -48,6 +48,7 @@ def get_extracted_posts(
     descending: bool = False,
 ):
     posts_repo = current_app.config["POSTS_REPO"]
+    current_app.logger.info(limit, order_by, descending)
     posts = posts_repo.list(limit=limit, order_by=order_by, descending=descending)
     return Response(
         json.dumps([asdict(post) for post in posts], default=lambda _: str(_)),
