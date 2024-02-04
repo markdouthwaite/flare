@@ -1,5 +1,5 @@
-from typing import Iterable, Optional
 from dataclasses import asdict
+from typing import Iterable, Optional
 
 from sqlalchemy import (
     JSON,
@@ -19,29 +19,30 @@ from sqlalchemy.exc import IntegrityError
 from flare.common.errors import PostRepositoryReadError, PostRepositoryWriteError
 from flare.entities import Condition, Post
 
-_posts = Table("post",
-               MetaData(),
-               Column("id", String),
-               Column("url", String, primary_key=True),
-               Column("kind", String),
-               Column("title", String),
-               Column("description", String, nullable=True),
-               Column("text", String),
-               Column("image_url", String, nullable=True),
-               Column("locale", String),
-               Column("excerpt", String),
-               Column("featured", Boolean),
-               Column("status", String),
-               Column("readability", Integer),
-               Column("read_time", Integer),
-               Column("rating", Float),
-               Column("metadata", JSON, nullable=True),
-               Column("created_at", DateTime),
-               Column("created_by", String),
-               Column("updated_at", DateTime, nullable=True),
-               Column("updated_by", String, nullable=True),
-               Column("tags", JSON)
-               )
+_posts = Table(
+    "post",
+    MetaData(),
+    Column("id", String),
+    Column("url", String, primary_key=True),
+    Column("kind", String),
+    Column("title", String),
+    Column("description", String, nullable=True),
+    Column("text", String),
+    Column("image_url", String, nullable=True),
+    Column("locale", String),
+    Column("excerpt", String),
+    Column("featured", Boolean),
+    Column("status", String),
+    Column("readability", Integer),
+    Column("read_time", Integer),
+    Column("rating", Float),
+    Column("metadata", JSON, nullable=True),
+    Column("created_at", DateTime),
+    Column("created_by", String),
+    Column("updated_at", DateTime, nullable=True),
+    Column("updated_by", String, nullable=True),
+    Column("tags", JSON),
+)
 
 
 class SQLPostRepository:
@@ -53,7 +54,11 @@ class SQLPostRepository:
     def _maybe_create(self):
         _posts.create(self.engine)
 
-    def list(self, order_by: Optional[str] = None, where: Optional[Iterable[Condition]] = None):
+    def list(
+        self,
+        order_by: Optional[str] = None,
+        where: Optional[Iterable[Condition]] = None,
+    ):
         statement = select(_posts)
 
         if order_by is not None:
@@ -67,7 +72,8 @@ class SQLPostRepository:
                     )
                 else:
                     raise PostRepositoryReadError(
-                        f"unknown operator in condition '{condition.operator}'.")
+                        f"unknown operator in condition '{condition.operator}'."
+                    )
 
         with self.engine.connect() as conn:
             res = conn.execute(statement)
@@ -92,10 +98,10 @@ class SQLPostRepository:
             with self.engine.connect() as conn:
                 conn.execute(statement)
                 conn.commit()
-        except IntegrityError:
+        except IntegrityError as err:
             raise PostRepositoryWriteError(
                 f"url '{post.url}' already exists in posts repository"
-            )
+            ) from err
 
     def exists(self, url: str) -> bool:
         statement = select(_posts).where(_posts.c.url == url)
@@ -105,4 +111,3 @@ class SQLPostRepository:
             post_record = res.fetchone()
 
         return post_record is not None
-

@@ -1,8 +1,10 @@
-import pytest
-from flare.infrastructure.repositories.posts import SQLPostRepository
-from flare.common.errors import PostRepositoryWriteError
 from datetime import datetime
+
+import pytest
+
+from flare.common.errors import PostRepositoryWriteError
 from flare.entities import Post, Tag
+from flare.infrastructure.repositories.posts import SQLPostRepository
 
 
 @pytest.fixture(scope="session")
@@ -29,16 +31,14 @@ def sample_post():
         created_by="mark@differential.pub",
         updated_at=None,
         updated_by=None,
-        tags=[
-            Tag(name="demo")
-        ]
+        tags=[Tag(name="demo")],
     )
     return post
 
 
 @pytest.fixture
 def sqlite_repository(tmp_path):
-    return SQLPostRepository(f"sqlite://")
+    return SQLPostRepository("sqlite://")
 
 
 @pytest.fixture
