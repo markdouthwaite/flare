@@ -1,5 +1,5 @@
 import json
-
+from datetime import datetime
 from flare.common.extract.errors import UrlExtractError, UrlExtractFilterException
 from flare.common.extract.validate import valid_url
 from flare.common.posts import to_post
@@ -93,4 +93,13 @@ def load_from_disk(path: str, repo: PostRepository):
             if len(raw_post_data) > 0:
                 data = json.loads(raw_post_data)
                 post = Post(**data)
+
+                if isinstance(post.created_at, str):
+                    post.created_at = datetime.strptime(
+                        post.created_at, "%Y-%m-%d %H:%M:%S.%f"
+                    )
+                if isinstance(post.updated_at, str):
+                    post.updated_at = datetime.strptime(
+                        post.updated_at, "%Y-%m-%d %H:%M:%S.%f"
+                    )
                 repo.insert(post)
