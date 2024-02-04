@@ -3,6 +3,7 @@ from dataclasses import asdict
 
 from flask import Blueprint, Response, current_app, request
 
+from flare.common.parameters import boolean_parameter
 from flare.common.identifier import generate_id
 from flare.entities.errors import SuccessMessage
 from flare.infrastructure.tasks.posts import extract_and_load_post
@@ -44,17 +45,15 @@ def get_extracted_post(post_id: str):
 def get_extracted_posts():
     args = request.args
     posts_repo = current_app.config["POSTS_REPO"]
-    descending = args.get("descending")
 
-    if descending.lower() == "true":
-        descending = True
-    else:
-        descending = False
+    featured = boolean_parameter(args.get("featured"))
+    descending = boolean_parameter(args.get("descending"))
 
     posts = posts_repo.list(
         limit=args.get("limit"),
         order_by=args.get("order_by"),
         descending=descending,
+        featured=featured
     )
     return Response(
         json.dumps([asdict(post) for post in posts], default=lambda _: str(_)),
