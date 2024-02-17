@@ -1,32 +1,8 @@
 import math
-from random import randint, random
 from typing import List
 
 from flare.common.keywords import count_total_hits
-from flare.entities import ExtractedItem, Post
-
-
-def decay(s, t, h):
-    _lambda = math.log2(2) / float(h)
-    return s * math.exp(-_lambda * t)
-
-
-def status(post: Post) -> str:
-    if post.rating > 7:
-        return "published"
-    else:
-        return "unpublished"
-
-
-def featured(post: Post) -> bool:
-    if post.rating > 7 and random() > 0.7 and post.kind != "code":
-        return True
-    else:
-        return False
-
-
-def relevance(_: ExtractedItem) -> int:
-    return randint(1, 10)
+from flare.entities import ExtractedItem
 
 
 def default_scorer(_: ExtractedItem, value: float = 1.0):
