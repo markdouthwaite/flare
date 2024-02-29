@@ -1,7 +1,7 @@
 import pycld2 as cld2
 
 
-def detect(text) -> str:
+def detect(text: str) -> str:
     try:
         is_reliable, _, details = cld2.detect(text, isPlainText=True)
 
