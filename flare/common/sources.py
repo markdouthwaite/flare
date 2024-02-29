@@ -1,7 +1,7 @@
 from flare.common.extract import extract
 from flare.common.extract.metadata import summarize
 from flare.common.plugins import prepare_plugin
-from flare.common.scoring import default_scorer
+from flare.common.scorers import defaults
 from flare.entities import Source, Sources
 
 
@@ -14,7 +14,7 @@ def load_sources(s) -> Sources:
             filters=[prepare_plugin(_) for _ in value.get("filters", [])],
             extractor=prepare_plugin(value.get("extractor", extract)),
             summarizer=prepare_plugin(value.get("summarizer", summarize)),
-            scorer=prepare_plugin(value.get("scorer", default_scorer)),
+            scorer=prepare_plugin(value.get("scorer", defaults.identity_scorer)),
             url_patterns=value.get("url_patterns", {}),
         )
 
