@@ -30,8 +30,8 @@ def create_app(settings):
     celery_app.conf.update(include=["flare.infrastructure.tasks.posts"])
     flask_app.celery = celery_app
 
-    flask_app.register_blueprint(feeds_blueprint)
-    flask_app.register_blueprint(posts_blueprint)
-    flask_app.register_blueprint(tasks_blueprint)
-    flask_app.register_blueprint(error_handler_blueprint)
+    flask_app.register_blueprint(feeds_blueprint, url_prefix='/api/v1')
+    flask_app.register_blueprint(posts_blueprint, url_prefix='/api/v1')
+    flask_app.register_blueprint(tasks_blueprint, url_prefix='/api/v1')
+    flask_app.register_blueprint(error_handler_blueprint, url_prefix='/api/v1')
     return flask_app, celery_app
