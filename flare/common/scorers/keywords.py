@@ -5,10 +5,6 @@ from flare.common.keywords import count_total_hits
 from flare.entities import ExtractedItem
 
 
-def default_scorer(_: ExtractedItem, value: float = 1.0):
-    return value
-
-
 def total_keyword_hits_scorer(
     item: ExtractedItem,
     keywords: List[str],
