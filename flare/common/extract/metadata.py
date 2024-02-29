@@ -2,7 +2,6 @@ import math
 from typing import Optional
 from urllib.parse import urlparse
 
-import pycld2 as cld2
 from textstat import textstat
 
 
@@ -64,23 +63,6 @@ def get_readability(text) -> int:
 
 def summarize(text: str) -> str:
     return text[:247] + "..."
-
-
-def get_locale(text) -> str:
-    is_reliable, _, details = cld2.detect(text, isPlainText=True)
-
-    if not is_reliable:
-        lang = "unknown"
-    elif len(details) > 0 and details[0][1] == "en":
-        significant_langs = [_ for _ in details[1:] if _[2] >= 20]
-        if len(significant_langs) > 0:
-            lang = sorted(significant_langs, key=lambda _: -_[2])[0][1]
-        else:
-            lang = "en"
-    else:
-        lang = details[0][1]
-
-    return lang
 
 
 def postprocess_github_metadata(payload: dict) -> dict:
