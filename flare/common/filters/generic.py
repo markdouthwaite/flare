@@ -1,13 +1,13 @@
 from typing import List
 
-from flare.common.extract.metadata import get_locale
+from flare.common import locale as _locale
 from flare.common.keywords import MACHINE_LEARNING as MACHINE_LEARNING_KEYWORDS
 from flare.common.keywords import count_unique_hits
 from flare.entities import ExtractedItem
 
 
 def is_english_language(item: ExtractedItem):
-    locale = get_locale(item.content.text)
+    locale = _locale.detect(item.content.text)
     if locale in ["en", "en-GB", "en-US"]:
         return True
     else:
