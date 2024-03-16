@@ -41,7 +41,7 @@ LinkExtractorConfig = Dict[str, Any]
 
 
 LinkExtractor = Callable[[Link, LinkExtractorConfig], ExtractedLink]
-ExtractedLinkSummarizer = Callable[[ExtractedLink], str]
+ExtractedLinkSummarizer = Callable[[str], str]
 
 
 RichLinkAttributes = Dict[str, float]
