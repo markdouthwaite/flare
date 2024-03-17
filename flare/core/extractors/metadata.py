@@ -1,4 +1,4 @@
-from typing import Optional, Dict
+from typing import Dict, Optional
 
 from flare.core.models.documents import Document
 
@@ -40,12 +40,30 @@ def twitter_metadata(doc: Document):
     }
 
 
+def head_metadata(doc: Document):
+    title = doc.title.text
+    if title is None:
+        title = doc.h1.text
+
+    if title is None:
+        metadata = {}
+    else:
+        metadata = dict(title=title)
+    return metadata
+
+
 def extract(doc: Document) -> Dict[str, Optional[str]]:
+    head = head_metadata(doc)
     og = open_graph_metadata(doc)
     tw = twitter_metadata(doc)
 
-    for key, value in tw.items():
-        if og[key] is None and value is not None:
-            og[key] = value
+    metadata = dict()
 
-    return og
+    # the priority of metadata fields is captured in the order of the meta fields
+    # we prefer open graph, then twitter, then info in the head tag
+    for meta in (og, tw, head):
+        for k, v in meta.items():
+            if metadata.get(k) is None:
+                metadata[k] = v
+
+    return metadata

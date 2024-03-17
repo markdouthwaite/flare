@@ -1,14 +1,13 @@
-from flare.core.models.documents import Document
-from flare.core.errors import LinkFetchError
 import json
+
 import requests
+
+from flare.core.errors import LinkFetchError
+from flare.core.models.documents import Document
 
 
 def default_headers():
-    return {
-        "User-Agent": "Mozilla/5.0",
-        "Accept-Language": "en-US,en,en-GB;1=0.5"
-    }
+    return {"User-Agent": "Mozilla/5.0", "Accept-Language": "en-US,en,en-GB;1=0.5"}
 
 
 def fetch(url: str, headers: dict) -> str:

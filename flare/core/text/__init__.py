@@ -1,5 +1,3 @@
-from . import statistics, locale
+from . import locale, statistics
 
-__all__ = [
-    "statistics", "locale"
-]
+__all__ = ["statistics", "locale"]

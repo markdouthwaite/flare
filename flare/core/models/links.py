@@ -1,8 +1,9 @@
-from typing import Optional, Dict, Any, Callable, List, Tuple
-from pydantic import BaseModel
-from .tags import Tag
 from datetime import datetime
+from typing import Any, Callable, Dict, List, Optional, Tuple
 
+from pydantic import BaseModel
+
+from .tags import Tag
 
 LinkMetadata = Dict[str, Any]
 
@@ -64,8 +65,10 @@ class RichLink(BaseModel):
     readability: float
     tags: List[Tag]
     attributes: RichLinkAttributes
+    featured: bool = False
+    available: bool = True
     created_at: datetime
-    updated_at: datetime
+    updated_at: Optional[datetime]
 
 
 class RichLinkConfig(BaseModel):

@@ -1,9 +1,15 @@
-from flare.core.models.links import Link, ExtractedLink, LinkExtractorConfig, LinkText, LinkImage
-from flare.core.models.tags import Tag
+from trafilatura import extract as extract_html
+
 from flare.core.extractors.common import fetch_html
 from flare.core.extractors.metadata import extract as extract_metadata
-
-from trafilatura import extract as extract_html
+from flare.core.models.links import (
+    ExtractedLink,
+    Link,
+    LinkExtractorConfig,
+    LinkImage,
+    LinkText,
+)
+from flare.core.models.tags import Tag
 
 
 def extract(link: Link, config: LinkExtractorConfig) -> ExtractedLink:
@@ -16,18 +22,17 @@ def extract(link: Link, config: LinkExtractorConfig) -> ExtractedLink:
     if max_chars is not None and isinstance(max_chars, int):
         text = text[:max_chars]
 
+    if metadata.get("image") is not None:
+        image = LinkImage(url=metadata.get("image"))
+    else:
+        image = None
+
     return ExtractedLink(
         url=link.url,
         title=metadata.get("title"),
         description=metadata.get("description"),
-        text=LinkText(
-            value=text
-        ),
-        image=LinkImage(
-            url=metadata.get("image")
-        ),
+        text=LinkText(value=text),
+        image=image,
         metadata={},
-        tags=[
-            Tag(name="default")
-        ]
+        tags=[Tag(name="default")],
     )

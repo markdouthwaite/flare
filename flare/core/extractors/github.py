@@ -1,9 +1,15 @@
-import json
-from typing import List, Dict, Any
-from flare.core.models.links import Link, ExtractedLink, LinkExtractorConfig, LinkText, LinkImage
-from flare.core.models.tags import Tag
+from typing import List
+
 from flare.core.errors import LinkExtractError
 from flare.core.extractors.common import fetch, fetch_json
+from flare.core.models.links import (
+    ExtractedLink,
+    Link,
+    LinkExtractorConfig,
+    LinkImage,
+    LinkText,
+)
+from flare.core.models.tags import Tag
 
 _API_URL = "https://api.github.com/repos/{owner}/{repo_name}"
 _RAW_CONTENT_URL = (
@@ -17,11 +23,7 @@ def get_owner_and_name(url: str) -> List[str]:
     return url.split("/")[-2:]
 
 
-def get_readme(
-    owner: str,
-    repo_name: str,
-    config: LinkExtractorConfig
-) -> str:
+def get_readme(owner: str, repo_name: str, config: LinkExtractorConfig) -> str:
     for branch in config.get("branches", _DEFAULT_BRANCHES):
         for filename in config.get("filenames", _DEFAULT_FILENAMES):
             url = _RAW_CONTENT_URL.format(
@@ -35,9 +37,7 @@ def get_readme(
 
 
 def get_details(
-    owner: str,
-    repo_name: str,
-    config: LinkExtractorConfig,
+    owner: str, repo_name: str, config: LinkExtractorConfig,
 ):
     url = _API_URL.format(owner=owner, repo_name=repo_name)
     data = fetch_json(url, config)
@@ -66,33 +66,19 @@ def extract(link: Link, config: LinkExtractorConfig) -> ExtractedLink:
     owner, repo_name = get_owner_and_name(link.url)
     max_chars = config.get("max_chars")
 
-    readme = get_readme(
-        owner=owner,
-        repo_name=repo_name,
-        config=config,
-    )
+    readme = get_readme(owner=owner, repo_name=repo_name, config=config,)
 
     if max_chars is not None and isinstance(max_chars, int):
         readme = readme[:max_chars]
 
-    details = get_details(
-        owner=owner,
-        repo_name=repo_name,
-        config=config,
-    )
+    details = get_details(owner=owner, repo_name=repo_name, config=config,)
 
     return ExtractedLink(
         url=link.url,
         title=details.get("title"),
         description=details.get("description"),
-        text=LinkText(
-            value=readme
-        ),
-        image=LinkImage(
-            url=details.get("image")
-        ),
+        text=LinkText(value=readme),
+        image=LinkImage(url=details.get("image")),
         metadata=details.get("metadata"),
-        tags=[
-            Tag(name="arxiv")
-        ]
+        tags=[Tag(name="arxiv")],
     )

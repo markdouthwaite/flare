@@ -9,5 +9,3 @@ def read_time(text, wpm: int = 265) -> int:
 
 def readability(text) -> int:
     return int(math.ceil(textstat.flesch_reading_ease(text)))
-
-
