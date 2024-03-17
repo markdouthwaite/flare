@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import Any, Callable, Dict, List, Optional, Tuple
+from typing import Any, Callable, Dict, List, Optional, Tuple, Protocol
 
 from pydantic import BaseModel
 
@@ -79,3 +79,17 @@ class RichLinkConfig(BaseModel):
 class FeedItem(RichLink):
     rank: int
     featured: bool = False
+
+
+class RichLinkRepository(Protocol):
+    def get(self, rich_link_id: str) -> RichLink:
+        pass
+
+    def insert(self, rich_link: RichLink):
+        pass
+
+    def list(self):
+        pass
+
+    def exists(self, rich_link_url: str) -> bool:
+        pass

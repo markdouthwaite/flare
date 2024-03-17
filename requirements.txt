@@ -9,3 +9,4 @@ redis
 pandas
 pyarrow
 trafilatura
+sqlalchemy

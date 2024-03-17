@@ -1,4 +1,4 @@
-from typing import Union
+from typing import Union, Optional, Tuple
 from urllib.parse import urlparse
 from datetime import datetime
 
@@ -11,7 +11,9 @@ from flare.core.models.links import (
     LinkExtractorConfig,
     RichLink,
     RichLinkConfig,
+    RichLinkRepository,
 )
+from flare.core.errors import LinkValidationError
 
 
 def domain(url: str) -> str:
@@ -21,21 +23,21 @@ def domain(url: str) -> str:
 def _validate(
     link: Union[ExtractedLink, Link],
     filter_set: Union[ExtractedLinkFilterSet, LinkFilterSet],
-) -> bool:
+) -> Tuple[bool, Optional[str]]:
     for f in filter_set.filters:
         if not f(link):
-            return False
+            return False, str(f)
 
-    return True
+    return True, None
 
 
-def validate_link(link: Link, filter_set: LinkFilterSet) -> bool:
+def validate_link(link: Link, filter_set: LinkFilterSet) -> Tuple[bool, Optional[str]]:
     return _validate(link, filter_set)
 
 
 def validate_extracted_link(
     extracted_link: ExtractedLink, filter_set: ExtractedLinkFilterSet
-) -> bool:
+) -> Tuple[bool, Optional[str]]:
     return _validate(extracted_link, filter_set)
 
 
@@ -71,10 +73,43 @@ def create_rich_link(link: ExtractedLink, config: RichLinkConfig) -> RichLink:
     return rich_link
 
 
+def init_rich_link_extractor(
+    link_extractor: LinkExtractor,
+    link_extractor_config: LinkExtractorConfig,
+    rich_link_config: RichLinkConfig,
+    rich_link_repo: RichLinkRepository,
+    link_filter_set: Optional[LinkFilterSet] = None,
+    extracted_link_filter_set: Optional[ExtractedLinkFilterSet] = None,
+):
+    def _rich_link_extractor(link: Link) -> str:
+        valid_link, validation_err = validate_link(link, link_filter_set)
+
+        if not valid_link:
+            raise LinkValidationError(f"link validation failed: {validation_err}")
+
+        extracted_link = link_extractor(link, link_extractor_config)
+
+        valid_extracted_link, validation_err = validate_extracted_link(
+            extracted_link, extracted_link_filter_set
+        )
+
+        if not valid_extracted_link:
+            raise LinkValidationError(
+                f"extracted link validation failed: {validation_err}"
+            )
+
+        rich_link = create_rich_link(extracted_link, rich_link_config)
+        rich_link_repo.insert(rich_link)
+        return rich_link.id
+
+    return _rich_link_extractor
+
+
 __all__ = [
     "create_rich_link",
     "validate_link",
     "validate_extracted_link",
     "extract_link",
     "domain",
+    "init_rich_link_extractor",
 ]
