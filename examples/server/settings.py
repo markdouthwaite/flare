@@ -23,10 +23,11 @@ from utils import machine_learning_relevance, summarize as openai_summarizer
 
 firebase_app = initialize_firebase_app()
 
-rich_link_repo = FirestoreRichLinkRepository(firebase_app, "rich_links")
+CELERY_BROKER_URL = "redis://0.0.0.0:6379/0"
+CELERY_RESULT_BACKEND = "redis://0.0.0.0:6379/0"
 
-
-rich_link_extractors = {
+RICH_LINK_REPOSITORY = FirestoreRichLinkRepository(firebase_app, "rich_links")
+RICH_LINK_EXTRACTORS = {
     "html": init_rich_link_extractor(
         link_extractor=html.extract,
         link_extractor_config={},
@@ -34,11 +35,11 @@ rich_link_extractors = {
             summarizer=openai_summarizer,
             attribute_scorers=[machine_learning_relevance],
         ),
-        rich_link_repo=rich_link_repo,
+        rich_link_repo=RICH_LINK_REPOSITORY,
         link_filter_set=LinkFilterSet(
             filters=[
                 partial(is_allowed, block_list=["youtube.com"]),
-                partial(is_existing, repo=rich_link_repo),
+                partial(is_existing, repo=RICH_LINK_REPOSITORY),
             ]
         ),
         extracted_link_filter_set=ExtractedLinkFilterSet(
@@ -55,9 +56,9 @@ rich_link_extractors = {
             summarizer=openai_summarizer,
             attribute_scorers=[machine_learning_relevance],
         ),
-        rich_link_repo=rich_link_repo,
+        rich_link_repo=RICH_LINK_REPOSITORY,
         link_filter_set=LinkFilterSet(
-            filters=[partial(is_existing, repo=rich_link_repo)]
+            filters=[partial(is_existing, repo=RICH_LINK_REPOSITORY)]
         ),
         extracted_link_filter_set=ExtractedLinkFilterSet(
             filters=[
@@ -76,9 +77,9 @@ rich_link_extractors = {
             summarizer=openai_summarizer,
             attribute_scorers=[machine_learning_relevance],
         ),
-        rich_link_repo=rich_link_repo,
+        rich_link_repo=RICH_LINK_REPOSITORY,
         link_filter_set=LinkFilterSet(
-            filters=[partial(is_existing, repo=rich_link_repo)]
+            filters=[partial(is_existing, repo=RICH_LINK_REPOSITORY)]
         ),
         extracted_link_filter_set=ExtractedLinkFilterSet(
             filters=[
