@@ -74,6 +74,7 @@ def extract(link: Link, config: LinkExtractorConfig) -> ExtractedLink:
     details = get_details(owner=owner, repo_name=repo_name, config=config,)
 
     return ExtractedLink(
+        id=link.id,
         url=link.url,
         title=details.get("title"),
         description=details.get("description"),

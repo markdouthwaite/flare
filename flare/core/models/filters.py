@@ -1,4 +1,4 @@
-from typing import Callable, Iterable
+from typing import Callable, List
 
 from pydantic import BaseModel
 
@@ -9,8 +9,8 @@ ExtractedLinkFilter = Callable[[ExtractedLink], bool]
 
 
 class LinkFilterSet(BaseModel):
-    filters: Iterable[LinkFilter]
+    filters: List[LinkFilter] = []
 
 
 class ExtractedLinkFilterSet(BaseModel):
-    filters: Iterable[ExtractedLinkFilter]
+    filters: List[ExtractedLinkFilter] = []

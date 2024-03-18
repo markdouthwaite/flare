@@ -49,7 +49,7 @@ def extract_link(
 
 def create_rich_link(link: ExtractedLink, config: RichLinkConfig) -> RichLink:
     rich_link = RichLink(
-        id=identifiers.generate_id(),
+        id=link.id,
         url=link.url,
         title=link.title,
         description=link.description,
@@ -78,8 +78,8 @@ def init_rich_link_extractor(
     link_extractor_config: LinkExtractorConfig,
     rich_link_config: RichLinkConfig,
     rich_link_repo: RichLinkRepository,
-    link_filter_set: Optional[LinkFilterSet] = None,
-    extracted_link_filter_set: Optional[ExtractedLinkFilterSet] = None,
+    link_filter_set: Optional[LinkFilterSet] = LinkFilterSet(),
+    extracted_link_filter_set: Optional[ExtractedLinkFilterSet] = ExtractedLinkFilterSet(),
 ):
     def _rich_link_extractor(link: Link) -> str:
         valid_link, validation_err = validate_link(link, link_filter_set)

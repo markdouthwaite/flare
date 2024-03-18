@@ -86,6 +86,7 @@ def extract(link: Link, config: LinkExtractorConfig) -> ExtractedLink:
         description = description[:max_chars]
 
     return ExtractedLink(
+        id=link.id,
         url=link.url,
         title=metadata.get("title"),
         description=description,

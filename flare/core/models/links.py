@@ -1,7 +1,7 @@
 from datetime import datetime
 from typing import Any, Callable, Dict, List, Optional, Tuple, Protocol
-
-from pydantic import BaseModel
+from flare.core.identifiers import generate_id
+from pydantic import BaseModel, Field
 
 from .tags import Tag
 
@@ -16,6 +16,7 @@ class UnfurledBody(BaseModel):
 
 
 class Link(BaseModel):
+    id: str = Field(default_factory=generate_id)
     url: str
 
 
@@ -29,6 +30,7 @@ class LinkImage(BaseModel):
 
 
 class ExtractedLink(BaseModel):
+    id: str
     url: str
     title: Optional[str]
     description: Optional[str]

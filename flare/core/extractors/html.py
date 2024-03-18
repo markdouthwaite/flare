@@ -28,6 +28,7 @@ def extract(link: Link, config: LinkExtractorConfig) -> ExtractedLink:
         image = None
 
     return ExtractedLink(
+        id=link.id,
         url=link.url,
         title=metadata.get("title"),
         description=metadata.get("description"),
