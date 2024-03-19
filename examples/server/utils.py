@@ -58,4 +58,4 @@ def score(attribute: str, link: ExtractedLink, system_prompt: str) -> Tuple[str,
 
 
 def machine_learning_relevance(link: ExtractedLink) -> Tuple[str, float]:
-    return score("machine-learning-relevance", link, score_prompt)
+    return score("machine_learning_relevance", link, score_prompt)
