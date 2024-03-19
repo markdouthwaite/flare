@@ -14,7 +14,6 @@ def initialize_app(settings):
         CELERY={
             "broker_url": settings.CELERY_BROKER_URL,
             "result_backend": settings.CELERY_RESULT_BACKEND,
-
         },
     )
     celery_app = initialize_celery(flask_app)

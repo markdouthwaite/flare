@@ -3,8 +3,6 @@ from typing import Any, Callable, Dict, List, Optional, Tuple, Protocol
 from flare.core.identifiers import generate_id
 from pydantic import BaseModel, Field
 
-from .tags import Tag
-
 LinkMetadata = Dict[str, Any]
 
 
@@ -37,7 +35,7 @@ class ExtractedLink(BaseModel):
     text: LinkText
     image: Optional[LinkImage]
     metadata: Optional[LinkMetadata]
-    tags: List[Tag]
+    tags: List[str]
 
 
 LinkExtractorConfig = Dict[str, Any]
@@ -58,14 +56,13 @@ class RichLink(BaseModel):
     url: str
     title: Optional[str]
     description: Optional[str]
-    text: LinkText
     image: Optional[LinkImage]
     metadata: Optional[LinkMetadata]
     locale: str
     excerpt: str
     read_time: float
     readability: float
-    tags: List[Tag]
+    tags: List[str]
     attributes: RichLinkAttributes
     featured: bool = False
     available: bool = True
@@ -83,6 +80,10 @@ class FeedItem(RichLink):
     featured: bool = False
 
 
+class RichLinkSet(BaseModel):
+    links: List[RichLink]
+
+
 class RichLinkRepository(Protocol):
     def get(self, rich_link_id: str) -> RichLink:
         pass
@@ -90,7 +91,7 @@ class RichLinkRepository(Protocol):
     def insert(self, rich_link: RichLink):
         pass
 
-    def list(self):
+    def list(self) -> RichLinkSet:
         pass
 
     def exists(self, rich_link_url: str) -> bool:

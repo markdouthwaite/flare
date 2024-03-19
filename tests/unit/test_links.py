@@ -1,5 +1,4 @@
 import pytest
-from flare.core.models.tags import Tag
 from flare.core.models.links import (
     Link,
     ExtractedLink,
@@ -25,7 +24,7 @@ def extracted_link():
         text=LinkText(value="Some long-form text stripped from the linked resource"),
         image=LinkImage(url="https://some.cdn.com/my-image"),
         metadata={},
-        tags=[Tag(name="example-tag")],
+        tags=["example-tag"],
     )
 
 

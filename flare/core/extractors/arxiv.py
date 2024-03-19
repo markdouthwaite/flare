@@ -13,7 +13,6 @@ from flare.core.models.links import (
     LinkImage,
     LinkText,
 )
-from flare.core.models.tags import Tag
 
 
 def get_citation_date(s: Document) -> str:
@@ -93,5 +92,5 @@ def extract(link: Link, config: LinkExtractorConfig) -> ExtractedLink:
         text=LinkText(value=text),
         image=LinkImage(url=metadata.get("image")),
         metadata=paper_info,
-        tags=[Tag(name="arxiv")],
+        tags=["arxiv"],
     )

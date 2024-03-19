@@ -1,7 +1,6 @@
 import pytest
 from datetime import datetime
 from flare.core.models.links import RichLink, LinkText, LinkImage
-from flare.core.models.tags import Tag
 from flare.core.errors import RichLinkRepositoryWriteError
 from flare.db.links.sqlite import SQLRichLinkRepository
 
@@ -20,7 +19,7 @@ def sample_rich_link():
         excerpt="a summary of my link",
         read_time=5,
         readability=40,
-        tags=[Tag(name="example-tag")],
+        tags=["example-tag"],
         attributes={"attr-1": 100, "attr-2": 222},
         featured=False,
         available=True,

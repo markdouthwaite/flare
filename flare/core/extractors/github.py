@@ -9,7 +9,6 @@ from flare.core.models.links import (
     LinkImage,
     LinkText,
 )
-from flare.core.models.tags import Tag
 
 _API_URL = "https://api.github.com/repos/{owner}/{repo_name}"
 _RAW_CONTENT_URL = (
@@ -81,5 +80,5 @@ def extract(link: Link, config: LinkExtractorConfig) -> ExtractedLink:
         text=LinkText(value=readme),
         image=LinkImage(url=details.get("image")),
         metadata=details.get("metadata"),
-        tags=[Tag(name="arxiv")],
+        tags=["arxiv"],
     )

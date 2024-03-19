@@ -9,7 +9,6 @@ from flare.core.models.links import (
     LinkImage,
     LinkText,
 )
-from flare.core.models.tags import Tag
 
 
 def extract(link: Link, config: LinkExtractorConfig) -> ExtractedLink:
@@ -35,5 +34,5 @@ def extract(link: Link, config: LinkExtractorConfig) -> ExtractedLink:
         text=LinkText(value=text),
         image=image,
         metadata={},
-        tags=[Tag(name="default")],
+        tags=["default"],
     )
