@@ -1,11 +1,11 @@
 from pydantic import BaseModel
-from typing import List
+from typing import List, Any
 
 
 class QueryFilter(BaseModel):
     field: str
     operator: str
-    value: str
+    value: Any
 
 
 class QueryFilterSet(BaseModel):
