@@ -66,6 +66,7 @@ class RichLink(BaseModel):
     attributes: RichLinkAttributes
     featured: bool = False
     available: bool = True
+    index_date: str
     created_at: datetime
     updated_at: Optional[datetime]
 

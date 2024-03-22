@@ -66,6 +66,7 @@ def create_rich_link(link: ExtractedLink, config: RichLinkConfig) -> RichLink:
                 attribute_scorer(link) for attribute_scorer in config.attribute_scorers
             )
         },
+        index_date=datetime.now().strftime("%Y-%m-%d"),
         created_at=datetime.now(),
         updated_at=None,
     )
