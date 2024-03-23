@@ -1,7 +1,7 @@
 from flask import Blueprint, current_app, Response, request, jsonify
 from flare.queue.tasks import extract_and_load_link as _extract_and_load_link
 from flare.core.identifiers import generate_id
-from flare.core.models.queries import QueryFilterSet, QueryFilter, QueryOrderBy
+from flare.core.links import list_links
 
 links_blueprint = Blueprint("links", __name__)
 
@@ -33,19 +33,6 @@ def get_rich_links():
     rich_links_repo = current_app.config["RICH_LINKS_REPO"]
     payload = request.json
 
-    if payload.get("filter_set") is not None:
-        filters = [QueryFilter(**_) for _ in payload.get("filter_set")]
-        filter_set = QueryFilterSet(filters=filters)
-    else:
-        filter_set = None
-
-    if payload.get("order_by") is not None:
-        order_by = QueryOrderBy(**payload.get("order_by"))
-    else:
-        order_by = None
-
-    limit = payload.get("limit", 10)
-
-    rich_links = rich_links_repo.list(filter_set=filter_set, order_by=order_by, limit=limit)
+    rich_links = list_links(payload, rich_links_repo)
 
     return Response(rich_links.json(), content_type="application/json")

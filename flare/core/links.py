@@ -2,6 +2,7 @@ from typing import Union, Optional, Tuple
 from urllib.parse import urlparse
 from datetime import datetime
 
+from flare.core.models.queries import QueryFilterSet, QueryOrderBy, QueryFilter
 from flare.core import text
 from flare.core.models.filters import ExtractedLinkFilterSet, LinkFilterSet
 from flare.core.models.links import (
@@ -12,6 +13,7 @@ from flare.core.models.links import (
     RichLink,
     RichLinkConfig,
     RichLinkRepository,
+    RichLinkSet
 )
 from flare.core.errors import LinkValidationError
 
@@ -105,6 +107,25 @@ def init_rich_link_extractor(
         return rich_link.id
 
     return _rich_link_extractor
+
+
+def list_links(payload: dict, repo: RichLinkRepository) -> RichLinkSet:
+    if payload.get("filter_set") is not None:
+        filters = [QueryFilter(**_) for _ in payload.get("filter_set")]
+        filter_set = QueryFilterSet(filters=filters)
+    else:
+        filter_set = None
+
+    if payload.get("order_by") is not None:
+        order_by = QueryOrderBy(**payload.get("order_by"))
+    else:
+        order_by = None
+
+    limit = payload.get("limit", 10)
+
+    rich_links = repo.list(filter_set=filter_set, order_by=order_by, limit=limit)
+
+    return rich_links
 
 
 __all__ = [
