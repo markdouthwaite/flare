@@ -22,7 +22,9 @@ dependencies = [
     "pandas",
     "pyarrow",
     "pydantic",
-    "firebase-admin"
+    "firebase-admin",
+    "trafilatura",
+    "sqlalchemy"
 ]
 
 [project.optional-dependencies]
