@@ -26,7 +26,7 @@ firebase_app = initialize_firebase_app()
 CELERY_BROKER_URL = "redis://0.0.0.0:6379/0"
 CELERY_RESULT_BACKEND = "redis://0.0.0.0:6379/0"
 
-RICH_LINK_REPOSITORY = FirestoreRichLinkRepository(firebase_app, "rich_links")
+RICH_LINK_REPOSITORY = FirestoreRichLinkRepository(firebase_app, "links")
 RICH_LINK_EXTRACTORS = {
     "html": init_rich_link_extractor(
         link_extractor=html.extract,

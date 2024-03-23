@@ -20,7 +20,9 @@ dependencies = [
     "flask",
     "redis",
     "pandas",
-    "pyarrow"
+    "pyarrow",
+    "pydantic",
+    "firebase-admin"
 ]
 
 [project.optional-dependencies]
