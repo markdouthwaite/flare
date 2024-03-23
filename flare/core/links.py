@@ -135,4 +135,5 @@ __all__ = [
     "extract_link",
     "domain",
     "init_rich_link_extractor",
+    "list_links"
 ]
