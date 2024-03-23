@@ -80,5 +80,5 @@ def extract(link: Link, config: LinkExtractorConfig) -> ExtractedLink:
         text=LinkText(value=readme),
         image=LinkImage(url=details.get("image")),
         metadata=details.get("metadata"),
-        tags=["arxiv"],
+        tags=["github"],
     )
