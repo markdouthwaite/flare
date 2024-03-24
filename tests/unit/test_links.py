@@ -18,6 +18,7 @@ from flare.core.links import (
 @pytest.fixture
 def extracted_link():
     return ExtractedLink(
+        id="0",
         url="https://my.example.site",
         title="My Example Site",
         description="An amazing site",
@@ -50,7 +51,9 @@ def test_validate_link_succeeds(url, expected_state):
         filters=[lambda _: expected_state if url == _.url else ~expected_state]
     )
 
-    assert validate_link(link, filter_set) == expected_state
+    state, _ = validate_link(link, filter_set)
+
+    assert state == expected_state
 
 
 @pytest.mark.parametrize(
@@ -60,14 +63,14 @@ def test_validate_link_succeeds(url, expected_state):
         (
             [
                 lambda _: _.title == "My Example Site",
-                lambda _: _.tags[0].name == "example-tag",
+                lambda _: _.tags[0] == "example-tag",
             ],
             True,
         ),
         (
             [
                 lambda _: _.title == "My Example Site",
-                lambda _: _.tags[0].name == "other-tag",
+                lambda _: _.tags[0] == "other-tag",
             ],
             False,
         ),
@@ -75,8 +78,8 @@ def test_validate_link_succeeds(url, expected_state):
 )
 def test_validate_extracted_link_succeeds(filters, expected_state, extracted_link):
     filter_set = ExtractedLinkFilterSet(filters=filters)
-
-    assert validate_extracted_link(extracted_link, filter_set) == expected_state
+    state, _ = validate_extracted_link(extracted_link, filter_set)
+    assert state == expected_state
 
 
 @pytest.mark.parametrize(

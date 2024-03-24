@@ -23,7 +23,6 @@ _links = Table(
     Column("url", String, primary_key=True),
     Column("title", String),
     Column("description", String, nullable=True),
-    Column("text", JSON),
     Column("image", JSON, nullable=True),
     Column("metadata", JSON, nullable=True),
     Column("locale", String),
@@ -34,6 +33,7 @@ _links = Table(
     Column("attributes", JSON, nullable=True),
     Column("featured", Boolean),
     Column("available", String),
+    Column("index_date", String),
     Column("created_at", DateTime),
     Column("updated_at", DateTime, nullable=True),
 )
@@ -62,12 +62,12 @@ class SQLRichLinkRepository:
                 raise RichLinkRepositoryReadError(
                     f"no such rich link with id '{rich_link_id}'"
                 )
-
+        print(rich_link_record)
         return RichLink(**dict(zip(RichLink.__fields__, rich_link_record)))
 
     def insert(self, rich_link: RichLink):
         rich_link_dict = rich_link.dict()
-
+        print(rich_link_dict)
         statement = _links.insert().values(**rich_link_dict)
         try:
             with self.engine.connect() as conn:

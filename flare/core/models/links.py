@@ -35,7 +35,7 @@ class ExtractedLink(BaseModel):
     text: LinkText
     image: Optional[LinkImage]
     metadata: Optional[LinkMetadata]
-    tags: List[str]
+    tags: List[str] = Field(default_factory=lambda: [])
 
 
 LinkExtractorConfig = Dict[str, Any]
@@ -96,4 +96,9 @@ class RichLinkRepository(Protocol):
         pass
 
     def exists(self, rich_link_url: str) -> bool:
+        pass
+
+
+class RichLinkPostprocessor(Protocol):
+    def __call__(self, rich_link: RichLink) -> RichLink:
         pass

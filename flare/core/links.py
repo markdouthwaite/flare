@@ -1,4 +1,4 @@
-from typing import Union, Optional, Tuple
+from typing import Union, Optional, Tuple, Iterable
 from urllib.parse import urlparse
 from datetime import datetime
 
@@ -13,7 +13,8 @@ from flare.core.models.links import (
     RichLink,
     RichLinkConfig,
     RichLinkRepository,
-    RichLinkSet
+    RichLinkSet,
+    RichLinkPostprocessor
 )
 from flare.core.errors import LinkValidationError
 
@@ -84,6 +85,7 @@ def init_rich_link_extractor(
     extracted_link_filter_set: Optional[
         ExtractedLinkFilterSet
     ] = ExtractedLinkFilterSet(),
+    rich_link_postprocessors: Optional[Iterable[RichLinkPostprocessor]] = None
 ):
     def _rich_link_extractor(link: Link) -> str:
         valid_link, validation_err = validate_link(link, link_filter_set)
@@ -103,6 +105,11 @@ def init_rich_link_extractor(
             )
 
         rich_link = create_rich_link(extracted_link, rich_link_config)
+
+        if rich_link_postprocessors is not None:
+            for postprocessor in rich_link_postprocessors:
+                rich_link = postprocessor(rich_link)
+
         rich_link_repo.insert(rich_link)
         return rich_link.id
 

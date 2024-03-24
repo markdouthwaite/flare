@@ -12,17 +12,17 @@ def sample_rich_link():
         url="https://some.url",
         title="my title",
         description="my description",
-        text=LinkText(value="a wonderful wall of text"),
         image=LinkImage(url="https://my.cdn.com/image"),
         metadata={},
         locale="en-US",
         excerpt="a summary of my link",
-        read_time=5,
-        readability=40,
+        read_time=5.0,
+        readability=40.0,
         tags=["example-tag"],
         attributes={"attr-1": 100, "attr-2": 222},
         featured=False,
         available=True,
+        index_date="2024-03-01",
         created_at=datetime.now(),
         updated_at=None,
     )
@@ -35,6 +35,7 @@ def rich_link_repo():
 
 @pytest.fixture
 def seeded_rich_link_repo(rich_link_repo, sample_rich_link):
+    print("sample", sample_rich_link)
     rich_link_repo.insert(sample_rich_link)
     yield rich_link_repo
 
