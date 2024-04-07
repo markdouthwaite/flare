@@ -1,3 +1,4 @@
+import logging
 from typing import Optional
 
 from pgvector.sqlalchemy import Vector
@@ -50,10 +51,10 @@ class SQLRichLinkRepository:
 
     def _maybe_create(self):
         try:
-            print("attempting to create table...")
+            logging.debug("attempting to create table...")
             _links.create(self.engine)
         except Exception:
-            print("skipping create step")
+            logging.debug("skipping table creation")
 
     def get(self, rich_link_id: str) -> RichLink:
         statement = select(_links).where(_links.c.id == rich_link_id)
