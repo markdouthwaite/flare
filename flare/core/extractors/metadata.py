@@ -48,7 +48,7 @@ def head_metadata(doc: Document):
     if title is None:
         metadata = {}
     else:
-        metadata = dict(title=title)
+        metadata = {"title": title}
     return metadata
 
 
@@ -57,7 +57,7 @@ def extract(doc: Document) -> Dict[str, Optional[str]]:
     og = open_graph_metadata(doc)
     tw = twitter_metadata(doc)
 
-    metadata = dict()
+    metadata = {}
 
     # the priority of metadata fields is captured in the order of the meta fields
     # we prefer open graph, then twitter, then info in the head tag

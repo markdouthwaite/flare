@@ -1,9 +1,9 @@
-from typing import Union, Optional, Tuple, Iterable
-from urllib.parse import urlparse
 from datetime import datetime
+from typing import Iterable, Optional, Tuple, Union
+from urllib.parse import urlparse
 
-from flare.core.models.queries import QueryFilterSet, QueryOrderBy, QueryFilter
 from flare.core import text
+from flare.core.errors import LinkValidationError
 from flare.core.models.filters import ExtractedLinkFilterSet, LinkFilterSet
 from flare.core.models.links import (
     ExtractedLink,
@@ -12,11 +12,11 @@ from flare.core.models.links import (
     LinkExtractorConfig,
     RichLink,
     RichLinkConfig,
+    RichLinkPostprocessor,
     RichLinkRepository,
     RichLinkSet,
-    RichLinkPostprocessor
 )
-from flare.core.errors import LinkValidationError
+from flare.core.models.queries import QueryFilter, QueryFilterSet, QueryOrderBy
 
 
 def domain(url: str) -> str:
@@ -51,6 +51,7 @@ def extract_link(
 
 
 def create_rich_link(link: ExtractedLink, config: RichLinkConfig) -> RichLink:
+    attrs = [attribute_scorer(link) for attribute_scorer in config.attribute_scorers]
     rich_link = RichLink(
         id=link.id,
         url=link.url,
@@ -63,13 +64,8 @@ def create_rich_link(link: ExtractedLink, config: RichLinkConfig) -> RichLink:
         read_time=text.statistics.read_time(link.text.value),
         readability=text.statistics.readability(link.text.value),
         tags=link.tags,
-        attributes={
-            k: v
-            for k, v in (
-                attribute_scorer(link) for attribute_scorer in config.attribute_scorers
-            )
-        },
-        index_date=datetime.now().strftime("%Y-%m-%d"),
+        attributes=dict(attrs),
+        embedding=config.embedding_model(link.text.value),
         created_at=datetime.now(),
         updated_at=None,
     )
@@ -85,7 +81,7 @@ def init_rich_link_extractor(
     extracted_link_filter_set: Optional[
         ExtractedLinkFilterSet
     ] = ExtractedLinkFilterSet(),
-    rich_link_postprocessors: Optional[Iterable[RichLinkPostprocessor]] = None
+    rich_link_postprocessors: Optional[Iterable[RichLinkPostprocessor]] = None,
 ):
     def _rich_link_extractor(link: Link) -> str:
         valid_link, validation_err = validate_link(link, link_filter_set)
@@ -142,5 +138,5 @@ __all__ = [
     "extract_link",
     "domain",
     "init_rich_link_extractor",
-    "list_links"
+    "list_links",
 ]

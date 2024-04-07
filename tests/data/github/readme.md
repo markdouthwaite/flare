@@ -26,7 +26,7 @@ repo's docs. These include:
 * [A minimal example using the Movielens (100k) dataset.](examples/basics.py)
 * [An example using the meta-data features of Xanthus on the Movielens (100k) dataset.](examples/metadata.py)
 
-If you're interested in seeing the results of benchmarking of Xanthus' models against 'classic' 
+If you're interested in seeing the results of benchmarking of Xanthus' models against 'classic'
 collaborative filtering models, you'll have to sit tight. But rest assured: benchmarks are on their way.
 
 ## Installation
@@ -42,7 +42,7 @@ pip install xanthus
 That's it, you're good to go. Well, except for one thing...
 
 The package makes extensive use of [Tensorflow 2.0]() and the [Keras]() API. If
-you want to make use of the GPU acceleration provided by Tensorflow, you'll need to 
+you want to make use of the GPU acceleration provided by Tensorflow, you'll need to
 follow the [Tensorflow team's guide]() for setting that up. If you don't need GPUs
 right now, then great, you _really_ are all set.
 

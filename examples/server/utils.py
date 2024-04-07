@@ -1,27 +1,27 @@
-from typing import Tuple
-from flare.core.models.links import ExtractedLink
-
 import json
+from typing import Tuple
+
 from openai import OpenAI
 
+from flare.core.models.links import ExtractedLink
 
 openai_client = OpenAI()
 
 
 summarise_prompt = """
-"You are an expert copy editor for a science magazine. 
-You are reviewing stories for inclusion in your online magazine. 
-You need to write a short abstract for the following to act as the article summary on 
-your website. The summary cannot exceed 50 words. Use a relaxed tone of voice, but not 
+"You are an expert copy editor for a science magazine.
+You are reviewing stories for inclusion in your online magazine.
+You need to write a short abstract for the following to act as the article summary on
+your website. The summary cannot exceed 50 words. Use a relaxed tone of voice, but not
 too informal. Do not use emojis."
 """
 
 
 score_prompt = """
-You are an expert editor for a machine learning magazine aimed at machine learning 
-engineers and product people interested in artificial intelligence. You are able to give 
-a interest score to any text passed to you. The text you receive may be articles, 
-scientific paper abstracts or code repositories. 
+You are an expert editor for a machine learning magazine aimed at machine learning
+engineers and product people interested in artificial intelligence. You are able to give
+a interest score to any text passed to you. The text you receive may be articles,
+scientific paper abstracts or code repositories.
 
 Give your response in JSON format with the following schema with no other formatting:
 

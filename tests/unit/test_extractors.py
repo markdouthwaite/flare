@@ -1,8 +1,7 @@
-import pytest
 from unittest.mock import patch
 
+from flare.core.extractors import arxiv, github, html
 from flare.core.models.links import Link
-from flare.core.extractors import github, arxiv, html
 
 
 @patch("flare.core.extractors.common.requests.get")

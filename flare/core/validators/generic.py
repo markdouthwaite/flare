@@ -1,7 +1,8 @@
 from typing import List
-from flare.core.text import locale as _locale
-from flare.core.models.links import ExtractedLink, Link, RichLinkRepository
+
 from flare.core import keywords
+from flare.core.models.links import ExtractedLink, Link, RichLinkRepository
+from flare.core.text import locale as _locale
 
 
 def is_allowed(link: Link, block_list: List[str]) -> bool:

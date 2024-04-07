@@ -1,9 +1,12 @@
 from typing import Optional
-from firebase_admin import firestore, App as FirebaseApp
+
+from firebase_admin import App as FirebaseApp
+from firebase_admin import firestore
+from google.cloud.firestore_v1 import FieldFilter, Query
+
+from flare.core.errors import RichLinkRepositoryReadError, RichLinkRepositoryWriteError
 from flare.core.models.links import RichLink, RichLinkSet
 from flare.core.models.queries import QueryFilterSet, QueryOrderBy
-from flare.core.errors import RichLinkRepositoryWriteError, RichLinkRepositoryReadError
-from google.cloud.firestore_v1 import FieldFilter, Query
 
 
 class FirestoreRepository:

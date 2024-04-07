@@ -1,17 +1,18 @@
 import pytest
-from flare.core.models.links import (
-    Link,
-    ExtractedLink,
-    LinkText,
-    LinkImage,
-    RichLinkConfig,
-)
-from flare.core.models.filters import LinkFilterSet, ExtractedLinkFilterSet
+import numpy as np
 from flare.core.links import (
-    domain,
-    validate_link,
-    validate_extracted_link,
     create_rich_link,
+    domain,
+    validate_extracted_link,
+    validate_link,
+)
+from flare.core.models.filters import ExtractedLinkFilterSet, LinkFilterSet
+from flare.core.models.links import (
+    ExtractedLink,
+    Link,
+    LinkImage,
+    LinkText,
+    RichLinkConfig,
 )
 
 
@@ -93,6 +94,7 @@ def test_validate_extracted_link_succeeds(filters, expected_state, extracted_lin
                     if _.title == "My Example Site"
                     else ("title-score", 0.0)
                 ],
+                embedding_model=lambda _: np.random.random(384)
             ),
             [("title-score", 1.0)],
         ),

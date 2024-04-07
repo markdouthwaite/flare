@@ -1,5 +1,6 @@
+from celery import Celery, Task, current_app, shared_task
 from flask import Flask
-from celery import current_app, shared_task, Celery, Task
+
 from flare.core.models.links import Link
 
 

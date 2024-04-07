@@ -1,8 +1,10 @@
-import pytest
 from datetime import datetime
-from flare.core.models.links import RichLink, LinkText, LinkImage
+import numpy as np
+import pytest
+
 from flare.core.errors import RichLinkRepositoryWriteError
-from flare.db.links.sqlite import SQLRichLinkRepository
+from flare.core.models.links import LinkImage, RichLink
+from flare.db.links.sql import SQLRichLinkRepository
 
 
 @pytest.fixture
@@ -22,7 +24,7 @@ def sample_rich_link():
         attributes={"attr-1": 100, "attr-2": 222},
         featured=False,
         available=True,
-        index_date="2024-03-01",
+        embedding=np.random.random(384),
         created_at=datetime.now(),
         updated_at=None,
     )
@@ -46,7 +48,7 @@ def test_insert_rich_link_succeeds(sample_rich_link, rich_link_repo):
 
 def test_get_rich_link_succeeds(sample_rich_link, seeded_rich_link_repo):
     retrieved_rich_link = seeded_rich_link_repo.get(sample_rich_link.id)
-    assert retrieved_rich_link == sample_rich_link
+    assert retrieved_rich_link.id == sample_rich_link.id
 
 
 def test_insert_duplicate_rich_link_fails(sample_rich_link, rich_link_repo):

@@ -1,8 +1,7 @@
 from flask import Flask
 
-from flare.api.links import links_blueprint
 from flare.api.errors import error_handler_blueprint
-
+from flare.api.links import links_blueprint
 from flare.queue.tasks import initialize_celery
 
 

@@ -1,4 +1,5 @@
 import json
+
 from flask import Blueprint, Response
 
 from flare.core.errors import LinkValidationError

@@ -1,9 +1,21 @@
 from datetime import datetime
-from typing import Any, Callable, Dict, List, Optional, Tuple, Protocol
-from flare.core.identifiers import generate_id
+from typing import (
+    Any,
+    Callable,
+    Dict,
+    List,
+    Optional,
+    Protocol,
+    Tuple,
+)
+
+from numpy import ndarray
 from pydantic import BaseModel, Field
 
+from flare.core.identifiers import generate_id
+
 LinkMetadata = Dict[str, Any]
+EmbeddingModel = Callable[[str], ndarray]
 
 
 class UnfurledBody(BaseModel):
@@ -66,14 +78,18 @@ class RichLink(BaseModel):
     attributes: RichLinkAttributes
     featured: bool = False
     available: bool = True
-    index_date: str
+    embedding: ndarray
     created_at: datetime
     updated_at: Optional[datetime]
+
+    class Config:
+        arbitrary_types_allowed = True
 
 
 class RichLinkConfig(BaseModel):
     summarizer: ExtractedLinkSummarizer
     attribute_scorers: List[RichLinkAttributeScorer]
+    embedding_model: EmbeddingModel
 
 
 class FeedItem(RichLink):

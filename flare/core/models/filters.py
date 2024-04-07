@@ -2,7 +2,7 @@ from typing import Callable, List
 
 from pydantic import BaseModel
 
-from .links import Link, ExtractedLink
+from .links import ExtractedLink, Link
 
 LinkFilter = Callable[[Link], bool]
 ExtractedLinkFilter = Callable[[ExtractedLink], bool]

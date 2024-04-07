@@ -1,7 +1,8 @@
-from flask import Blueprint, current_app, Response, request, jsonify
-from flare.queue.tasks import extract_and_load_link as _extract_and_load_link
+from flask import Blueprint, Response, current_app, jsonify, request
+
 from flare.core.identifiers import generate_id
 from flare.core.links import list_links
+from flare.queue.tasks import extract_and_load_link as _extract_and_load_link
 
 links_blueprint = Blueprint("links", __name__)
 

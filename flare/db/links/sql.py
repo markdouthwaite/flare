@@ -1,6 +1,6 @@
-from flare.core.models.links import RichLink
-from flare.core.errors import RichLinkRepositoryReadError, RichLinkRepositoryWriteError
+from typing import Optional
 
+from pgvector.sqlalchemy import Vector
 from sqlalchemy import (
     JSON,
     Boolean,
@@ -13,11 +13,14 @@ from sqlalchemy import (
     create_engine,
     select,
 )
-from sqlalchemy.exc import OperationalError, IntegrityError
+from sqlalchemy.exc import IntegrityError
 
+from flare.core.errors import RichLinkRepositoryReadError, RichLinkRepositoryWriteError
+from flare.core.models.links import RichLink
+from flare.core.models.queries import QueryFilterSet, QueryOrderBy
 
 _links = Table(
-    "rich_links",
+    "links",
     MetaData(),
     Column("id", String),
     Column("url", String, primary_key=True),
@@ -32,8 +35,8 @@ _links = Table(
     Column("tags", JSON),
     Column("attributes", JSON, nullable=True),
     Column("featured", Boolean),
-    Column("available", String),
-    Column("index_date", String),
+    Column("available", Boolean),
+    Column("embedding", Vector(384)),
     Column("created_at", DateTime),
     Column("updated_at", DateTime, nullable=True),
 )
@@ -47,9 +50,10 @@ class SQLRichLinkRepository:
 
     def _maybe_create(self):
         try:
+            print("attempting to create table...")
             _links.create(self.engine)
-        except OperationalError:
-            print("table already exists")
+        except Exception:
+            print("skipping create step")
 
     def get(self, rich_link_id: str) -> RichLink:
         statement = select(_links).where(_links.c.id == rich_link_id)
@@ -67,7 +71,6 @@ class SQLRichLinkRepository:
 
     def insert(self, rich_link: RichLink):
         rich_link_dict = rich_link.dict()
-        print(rich_link_dict)
         statement = _links.insert().values(**rich_link_dict)
         try:
             with self.engine.connect() as conn:
@@ -77,3 +80,14 @@ class SQLRichLinkRepository:
             raise RichLinkRepositoryWriteError(
                 f"url '{rich_link.url}' already exists in rich link repository"
             ) from err
+
+    def exists(self, rich_link_url: str) -> bool:
+        pass
+
+    def list(
+        self,
+        filter_set: Optional[QueryFilterSet] = None,
+        order_by: Optional[QueryOrderBy] = None,
+        limit: Optional[int] = None,
+    ):
+        pass

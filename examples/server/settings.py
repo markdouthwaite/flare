@@ -1,25 +1,26 @@
-from flare.core.models.links import RichLinkConfig
-from flare.core.models.filters import LinkFilterSet, ExtractedLinkFilterSet
+from functools import partial
+
+from firebase_admin import initialize_app as initialize_firebase_app
+from utils import machine_learning_relevance
+from utils import summarize as openai_summarizer
+
+from flare.core.extractors import arxiv, github, html
+from flare.core.keywords import machine_learning
 from flare.core.links import init_rich_link_extractor
+from flare.core.models.filters import ExtractedLinkFilterSet, LinkFilterSet
+from flare.core.models.links import RichLinkConfig
 from flare.core.validators.generic import (
-    is_topic,
     is_allowed,
     is_english_language,
     is_existing,
+    is_topic,
 )
 from flare.core.validators.github import (
     is_active_repo,
-    is_popular_repo,
     is_not_malware_repo,
+    is_popular_repo,
 )
-from flare.core.extractors import github, arxiv, html
-from firebase_admin import initialize_app as initialize_firebase_app
 from flare.db.links.firestore import FirestoreRichLinkRepository
-from flare.core.keywords import machine_learning
-from functools import partial
-
-from utils import machine_learning_relevance, summarize as openai_summarizer
-
 
 firebase_app = initialize_firebase_app()
 

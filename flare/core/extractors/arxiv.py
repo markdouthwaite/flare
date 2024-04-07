@@ -91,5 +91,5 @@ def extract(link: Link, config: LinkExtractorConfig) -> ExtractedLink:
         description=description,
         text=LinkText(value=text),
         image=LinkImage(url=metadata.get("image")),
-        metadata=paper_info
+        metadata=paper_info,
     )

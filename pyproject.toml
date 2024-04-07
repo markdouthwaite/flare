@@ -24,7 +24,12 @@ dependencies = [
     "pydantic",
     "firebase-admin",
     "trafilatura",
-    "sqlalchemy"
+    "sqlalchemy",
+    "psycopg2-binary",
+    "torch",
+    "transformers",
+    "sentence-transformers",
+    "pgvector"
 ]
 
 [project.optional-dependencies]

@@ -33,5 +33,5 @@ def extract(link: Link, config: LinkExtractorConfig) -> ExtractedLink:
         description=metadata.get("description"),
         text=LinkText(value=text),
         image=image,
-        metadata={}
+        metadata={},
     )

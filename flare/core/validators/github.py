@@ -1,4 +1,5 @@
 from datetime import datetime
+
 from flare.core.keywords import malware
 from flare.core.models.links import ExtractedLink
 

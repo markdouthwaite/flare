@@ -163,5 +163,4 @@ cython_debug/
 *.parquet
 *.csv
 *.tsv
-notebooks/data/content-sample.parquet
 .ruff_cache
