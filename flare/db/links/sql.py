@@ -9,6 +9,7 @@ from sqlalchemy import (
     DateTime,
     Float,
     MetaData,
+    Text,
     String,
     Table,
     create_engine,
@@ -24,13 +25,13 @@ _links = Table(
     "links",
     MetaData(),
     Column("id", String),
-    Column("url", String, primary_key=True),
-    Column("title", String),
-    Column("description", String, nullable=True),
+    Column("url", Text, primary_key=True),
+    Column("title", Text),
+    Column("description", Text, nullable=True),
     Column("image", JSON, nullable=True),
     Column("metadata", JSON, nullable=True),
-    Column("locale", String),
-    Column("excerpt", String),
+    Column("locale", Text),
+    Column("excerpt", Text),
     Column("read_time", Float),
     Column("readability", Float),
     Column("tags", JSON),
@@ -47,9 +48,8 @@ class SQLRichLinkRepository:
     def __init__(self, path: str):
         self.path = path
         self.engine = create_engine(path)
-        self._maybe_create()
 
-    def _maybe_create(self):
+    def create(self):
         try:
             logging.debug("attempting to create table...")
             _links.create(self.engine)
