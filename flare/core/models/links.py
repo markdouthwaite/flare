@@ -10,7 +10,7 @@ from typing import (
 )
 
 from numpy import ndarray
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_serializer
 
 from flare.core.identifiers import generate_id
 
@@ -85,6 +85,13 @@ class RichLink(BaseModel):
     class Config:
         arbitrary_types_allowed = True
 
+    @field_serializer('embedding')
+    def serialize_embedding(self, embedding: ndarray, _info):
+        return embedding.tolist()
+
+    @field_serializer('created_at')
+    def serialize_created_at(self, created_at: datetime, _info):
+        return created_at.strftime("%Y-%m-%d %H:%M:%S.%f")
 
 class RichLinkConfig(BaseModel):
     summarizer: ExtractedLinkSummarizer
