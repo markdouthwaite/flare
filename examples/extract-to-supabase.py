@@ -6,19 +6,13 @@ from flare.core.extractors import html
 from flare.core.links import init_rich_link_extractor
 from flare.core.models.filters import ExtractedLinkFilterSet
 from flare.core.models.links import Link, RichLinkConfig
-from flare.db.links.sql import SQLRichLinkRepository
+from flare.db.links.supabase import SupabaseRichLinkRepository
 
-SUPABASE_PASSWORD = os.getenv("SUPABASE_PASSWORD")
-SUPABASE_REGION = "aws-0-eu-west-2"
-SUPABASE_ID = "usppmvdsehlegndmklmc"
-CONNECTION_STRING = (
-    "postgresql://postgres.{user}:{password}@{region}.pooler.supabase.com:5432/postgres"
-)
+url: str = os.environ.get("SUPABASE_URL")
+key: str = os.environ.get("SUPABASE_KEY")
 
-rich_link_repo = SQLRichLinkRepository(
-    CONNECTION_STRING.format(
-        user=SUPABASE_ID, password=SUPABASE_PASSWORD, region=SUPABASE_REGION
-    )
+rich_link_repo = SupabaseRichLinkRepository(
+    url=url, key=key
 )
 
 rich_link_config = RichLinkConfig(
