@@ -1,2 +1,2 @@
-# flare
-A simple LLM-powered recommendation system.
+# Flare
+The intelligent feed management framework.
