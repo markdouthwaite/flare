@@ -93,6 +93,7 @@ class RichLink(BaseModel):
     def serialize_created_at(self, created_at: datetime, _info):
         return created_at.strftime("%Y-%m-%d %H:%M:%S.%f")
 
+
 class RichLinkConfig(BaseModel):
     summarizer: ExtractedLinkSummarizer
     attribute_scorers: List[RichLinkAttributeScorer]

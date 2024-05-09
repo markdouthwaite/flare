@@ -1,6 +1,6 @@
-from flare.core.models.links import RichLink
-
 from supabase import create_client
+
+from flare.core.models.links import RichLink
 
 
 class SupabaseRichLinkRepository:
@@ -9,7 +9,6 @@ class SupabaseRichLinkRepository:
 
     def get(self, rich_link_id: str) -> RichLink:
         response = self._client.table('links').select("*").eq("id", rich_link_id).execute()
-        print(response)
         return RichLink(**response["data"][0])
 
     def insert(self, rich_link: RichLink):

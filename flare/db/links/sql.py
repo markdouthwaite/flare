@@ -9,9 +9,9 @@ from sqlalchemy import (
     DateTime,
     Float,
     MetaData,
-    Text,
     String,
     Table,
+    Text,
     create_engine,
     select,
 )
