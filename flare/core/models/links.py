@@ -92,7 +92,6 @@ class RichLink(BaseModel):
 class RichLinkConfig(BaseModel):
     summarizer: ExtractedLinkSummarizer
     attribute_scorers: List[RichLinkAttributeScorer]
-    embedding_model: EmbeddingModel
 
 
 class FeedItem(RichLink):
