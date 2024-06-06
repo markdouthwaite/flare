@@ -12,11 +12,14 @@ def default_headers():
 
 def fetch(url: str, headers: dict) -> str:
     headers = default_headers().update(headers)
-    response = requests.get(url, headers=headers)
-    if response.ok:
-        return response.content.decode("utf-8")
-    else:
-        raise LinkFetchError(f"failed to fetch {url}: {response.status_code}")
+    try:
+        response = requests.get(url, headers=headers)
+        if response.ok:
+            return response.content.decode("utf-8")
+        else:
+            raise LinkFetchError(f"failed to fetch {url}: {response.status_code}")
+    except ConnectionError:
+        raise LinkFetchError(f"failed to fetch {url}: connection error")
 
 
 def fetch_html(url: str, headers: dict) -> Document:
