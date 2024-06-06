@@ -26,9 +26,6 @@ dependencies = [
     "trafilatura",
     "sqlalchemy",
     "psycopg2-binary",
-    "torch",
-    "transformers",
-    "sentence-transformers",
     "pgvector"
 ]
 

@@ -12,7 +12,7 @@ SUPABASE_PASSWORD = os.getenv("SUPABASE_PASSWORD")
 SUPABASE_REGION = "aws-0-eu-west-2"
 SUPABASE_ID = "usppmvdsehlegndmklmc"
 CONNECTION_STRING = (
-    "postgresql://postgres.{user}:{password}@{region}.pooler.supabase.com:5432/postgres"
+    "postgresql://postgres.{user}:{password}@{region}.pooler.supabase.com:6543/postgres"
 )
 
 rich_link_repo = SQLRichLinkRepository(

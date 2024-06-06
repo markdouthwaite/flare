@@ -65,7 +65,6 @@ def create_rich_link(link: ExtractedLink, config: RichLinkConfig) -> RichLink:
         readability=text.statistics.readability(link.text.value),
         tags=link.tags,
         attributes=dict(attrs),
-        embedding=config.embedding_model(link.text.value),
         created_at=datetime.now(),
         updated_at=None,
     )
