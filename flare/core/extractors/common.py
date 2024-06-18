@@ -17,9 +17,11 @@ def fetch(url: str, headers: dict) -> str:
         if response.ok:
             return response.content.decode("utf-8")
         else:
-            raise LinkFetchError(f"failed to fetch {url}: {response.status_code}")
-    except ConnectionError:
-        raise LinkFetchError(f"failed to fetch {url}: connection error")
+            raise LinkFetchError(
+                f"failed to fetch {url}: {response.status_code} ({response.content})"
+            )
+    except ConnectionError as error:
+        raise LinkFetchError(f"failed to fetch {url}: connection error") from error
 
 
 def fetch_html(url: str, headers: dict) -> Document:
