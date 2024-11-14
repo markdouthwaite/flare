@@ -17,7 +17,6 @@ def get_headers(custom_headers: dict) -> dict:
 
     return default_headers
 
-
 def fetch(url: str, custom_headers: dict) -> str:
     """
     Fetches the content from the given URL with optional custom headers.

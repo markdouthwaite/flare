@@ -78,16 +78,11 @@ class RichLink(BaseModel):
     attributes: RichLinkAttributes
     featured: bool = False
     available: bool = True
-    embedding: ndarray
     created_at: datetime
     updated_at: Optional[datetime]
 
     class Config:
         arbitrary_types_allowed = True
-
-    @field_serializer('embedding')
-    def serialize_embedding(self, embedding: ndarray, _info):
-        return embedding.tolist()
 
     @field_serializer('created_at')
     def serialize_created_at(self, created_at: datetime, _info):
@@ -97,7 +92,6 @@ class RichLink(BaseModel):
 class RichLinkConfig(BaseModel):
     summarizer: ExtractedLinkSummarizer
     attribute_scorers: List[RichLinkAttributeScorer]
-    embedding_model: EmbeddingModel
 
 
 class FeedItem(RichLink):

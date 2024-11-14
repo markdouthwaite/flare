@@ -81,6 +81,10 @@ class SQLRichLinkRepository:
             raise RichLinkRepositoryWriteError(
                 f"url '{rich_link.url}' already exists in rich link repository"
             ) from err
+        except Exception as err:
+            raise RichLinkRepositoryWriteError(
+                f"unknown write error for url '{rich_link.url}'"
+            ) from err
 
     def exists(self, rich_link_url: str) -> bool:
         pass
