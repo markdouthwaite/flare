@@ -1,2 +1,3 @@
 # Flare
-The intelligent feed management framework.
+
+The URL unfurling framework.
